@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta
       name="description"
-      content="TrainPhase 是一款面向力量训练者的微信小程序，将周期计划、训练执行、动作库、历史复盘、云同步与教练协作放进一个清晰流程。"
+      content="TrainPhase 是面向认真训练者与教练的专业力量训练计划系统，覆盖计划构建、计划编辑、大周期衔接、逐日执行、历史复盘与云同步。"
     />
     <meta name="theme-color" content="#0b0d0c" />
     <meta name="color-scheme" content="dark" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="zh_CN" />
-    <meta property="og:title" content="TrainPhase | 把训练周期真正执行下去" />
+    <meta property="og:title" content="TrainPhase | 专业力量训练计划系统" />
     <meta
       property="og:description"
-      content="计划、执行、复盘与教练协作，一个清晰的力量训练周期。"
+      content="从计划构建、编辑与大周期衔接，到逐日执行和复盘。"
     />
     <meta property="og:image" content="assets/trainphase-training-hero.webp" />
-    <title>TrainPhase | 把训练周期真正执行下去</title>
+    <title>TrainPhase | 专业力量训练计划系统</title>
     <link rel="icon" type="image/png" href="assets/trainphase-icon.png" />
     <link rel="preload" as="image" href="assets/trainphase-training-hero.webp" type="image/webp" />
     <style>
@@ -346,8 +346,11 @@
 
       .hero-visual {
         position: relative;
-        align-self: stretch;
-        min-height: 620px;
+        align-self: center;
+        width: 100%;
+        height: min(72dvh, 680px);
+        min-height: 520px;
+        margin: 0;
         overflow: hidden;
         border: 1px solid #2b302b;
         border-radius: var(--radius);
@@ -407,10 +410,14 @@
 
       .proof-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        grid-template-columns: 1.08fr 0.92fr 1.08fr 0.92fr;
       }
 
       .proof-item {
+        position: relative;
         min-height: 178px;
         padding: 34px 38px;
       }
@@ -424,9 +431,28 @@
         margin-bottom: 10px;
         color: var(--text);
         font-family: var(--display);
-        font-size: clamp(25px, 2.5vw, 36px);
+        font-size: clamp(23px, 2.1vw, 31px);
         font-weight: 800;
         letter-spacing: -0.035em;
+      }
+
+      .proof-item:not(:last-child)::after {
+        position: absolute;
+        top: 50%;
+        right: -12px;
+        z-index: 2;
+        display: grid;
+        width: 24px;
+        height: 24px;
+        transform: translateY(-50%);
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: var(--bg);
+        color: var(--accent);
+        content: "›";
+        font-size: 20px;
+        line-height: 1;
+        place-items: center;
       }
 
       .proof-item p {
@@ -478,6 +504,14 @@
         color: #c6cbc3;
       }
 
+      .cycle-item em {
+        display: block;
+        margin-top: 8px;
+        color: var(--faint);
+        font-size: 13px;
+        font-style: normal;
+      }
+
       .product-section {
         overflow: hidden;
         border-top: 1px solid var(--line);
@@ -523,6 +557,29 @@
         height: auto;
       }
 
+      .screen figcaption {
+        padding: 18px 20px 20px;
+        border-top: 1px solid var(--line);
+        background: #111411;
+      }
+
+      .screen figcaption strong,
+      .screen figcaption span {
+        display: block;
+      }
+
+      .screen figcaption strong {
+        margin-bottom: 4px;
+        font-family: var(--display);
+        font-size: 18px;
+      }
+
+      .screen figcaption span {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
       .screens-note {
         margin: 30px 0 0;
         color: var(--faint);
@@ -538,7 +595,7 @@
         display: grid;
         min-height: 660px;
         grid-template-columns: 1.28fr 0.72fr;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
         gap: 18px;
       }
 
@@ -568,7 +625,7 @@
       }
 
       .plan-card {
-        grid-row: 1 / 3;
+        grid-row: 1 / 4;
         background:
           linear-gradient(155deg, rgba(255, 122, 26, 0.1), transparent 45%),
           var(--surface);
@@ -613,6 +670,12 @@
         background:
           linear-gradient(140deg, rgba(255, 255, 255, 0.025), transparent 54%),
           var(--surface-soft);
+      }
+
+      .revision-card {
+        background:
+          linear-gradient(150deg, rgba(255, 122, 26, 0.055), transparent 62%),
+          #141814;
       }
 
       .trust-section {
@@ -810,7 +873,24 @@
         }
 
         .hero-visual {
-          min-height: 560px;
+          min-height: 500px;
+        }
+
+        .proof-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .proof-item:nth-child(3) {
+          border-top: 1px solid var(--line);
+          border-left: 0;
+        }
+
+        .proof-item:nth-child(4) {
+          border-top: 1px solid var(--line);
+        }
+
+        .proof-item::after {
+          display: none !important;
         }
 
         .cycle-layout,
@@ -828,12 +908,17 @@
 
         .capability-grid {
           grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto auto auto;
         }
 
         .plan-card {
           grid-row: auto;
           grid-column: 1 / 3;
           min-height: 430px;
+        }
+
+        .revision-card {
+          grid-column: 1 / 3;
         }
       }
 
@@ -902,6 +987,7 @@
         }
 
         .hero-visual {
+          height: 540px;
           min-height: 540px;
         }
 
@@ -923,6 +1009,10 @@
         .proof-item + .proof-item {
           border-top: 1px solid var(--line);
           border-left: 0;
+        }
+
+        .proof-item::after {
+          display: none !important;
         }
 
         .cycle-item {
@@ -962,6 +1052,10 @@
 
         .plan-card {
           min-height: 0;
+          grid-column: auto;
+        }
+
+        .revision-card {
           grid-column: auto;
         }
 
@@ -1072,7 +1166,7 @@
         "name": "TrainPhase",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "WeChat Mini Program",
-        "description": "面向力量训练者的训练周期、执行记录、动作库、云同步与教练协作工具。",
+        "description": "面向认真训练者与教练的专业力量训练计划系统，覆盖计划构建、编辑、大周期衔接、逐日执行、历史复盘与云同步。",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -1118,16 +1212,16 @@
       <section id="top">
         <div class="shell hero">
           <div class="hero-copy reveal">
-            <p class="eyebrow">WeChat Mini Program / 首发免费</p>
+            <p class="eyebrow">专业力量训练计划系统 / 微信小程序</p>
             <h1>
-              <span>把每一次训练，</span>
-              <span>放进正确的阶段。</span>
+              <span>不只记录训练。</span>
+              <span>构建整个周期。</span>
             </h1>
             <p class="lead">
-              TrainPhase 将计划、执行、复盘与教练协作放进一个清晰的训练周期。
+              从计划构建、编辑、阶段衔接到逐日执行，为认真训练的人保留完整控制权。
             </p>
             <div class="hero-actions">
-              <a class="button button-primary" href="#product">查看产品能力</a>
+              <a class="button button-primary" href="#cycle">查看计划系统</a>
               <a class="button button-secondary" href="mailto:hxiong443@gmail.com">联系项目</a>
             </div>
           </div>
@@ -1141,7 +1235,7 @@
               fetchpriority="high"
             />
             <figcaption class="hero-caption">
-              <strong>训练有序，进步有据。</strong>
+              <strong>计划会变，逻辑不能散。</strong>
               <img src="assets/trainphase-icon.png" alt="" width="48" height="48" />
             </figcaption>
           </figure>
@@ -1149,47 +1243,63 @@
       </section>
 
       <section class="proof" aria-label="产品概览">
-        <div class="shell proof-grid">
-          <div class="proof-item reveal">
-            <span class="proof-value">完整周期</span>
-            <p>从模板、排程到执行记录与历史回看。</p>
-          </div>
-          <div class="proof-item reveal">
-            <span class="proof-value">完整动作体系</span>
-            <p>覆盖主项、变式、辅助与核心训练。</p>
-          </div>
-          <div class="proof-item reveal">
-            <span class="proof-value">教练协作</span>
-            <p>在用户明确授权的范围内协作查看训练资料。</p>
-          </div>
-        </div>
+        <ol class="shell proof-grid">
+          <li class="proof-item reveal">
+            <span class="proof-value">构建计划</span>
+            <p>设定训练日、Block、动作 slot 与训练处方。</p>
+          </li>
+          <li class="proof-item reveal">
+            <span class="proof-value">继续编辑</span>
+            <p>调整周结构、强度、组次与进阶方式。</p>
+          </li>
+          <li class="proof-item reveal">
+            <span class="proof-value">衔接阶段</span>
+            <p>积累、转化、实现与过渡按结果推进。</p>
+          </li>
+          <li class="proof-item reveal">
+            <span class="proof-value">执行复盘</span>
+            <p>计划落到当日训练，再回收历史反馈。</p>
+          </li>
+        </ol>
       </section>
 
       <section id="cycle">
         <div class="shell cycle-layout">
           <div class="cycle-intro reveal">
-            <h2>训练不只是记录。</h2>
+            <h2>你在搭的不是训练表，是训练系统。</h2>
             <p>
-              它需要一个能持续运转的闭环。TrainPhase 把每个环节连起来，让今天的训练服务于整个周期。
+              TrainPhase 把计划从静态模板变成可构建、可编辑、可验证、可衔接并能持续执行的训练系统。
             </p>
           </div>
 
           <div class="cycle-list">
             <article class="cycle-item reveal">
-              <strong>定计划</strong>
-              <p>从成熟模板开始，也可以按训练天数、主项与周期策略定制安排。</p>
+              <strong>专业计划构建器</strong>
+              <p>
+                组织单周或多周周期，编辑 Block、训练日、动作 slot、组次、百分比或 RPE，并配置进阶、减载与测试周。
+                <em>当前已有独立构建器页面与计划验证流程。</em>
+              </p>
             </article>
             <article class="cycle-item reveal">
-              <strong>按天练</strong>
-              <p>围绕当天任务进入训练，记录重量、次数、RPE 与完成情况。</p>
+              <strong>同一套计划编辑器</strong>
+              <p>
+                自建计划可以回到原工作区继续修改周期、结构与强度。保存前会显示阻断项、提醒与计划评分，重要修改自动留档。
+                <em>已完成训练记录不会因为恢复计划版本而被覆盖。</em>
+              </p>
             </article>
             <article class="cycle-item reveal">
-              <strong>看趋势</strong>
-              <p>在训练历史中回看负荷、容量与周期进度，为下一阶段提供依据。</p>
+              <strong>大周期阶段衔接</strong>
+              <p>
+                力量举路径可启用完整大周期。当前阶段结束后，系统根据 TM 与 e1RM 等结果准备转化期、实现期、过渡期或下一轮积累期。
+                <em>每次阶段推进都由训练者确认。</em>
+              </p>
             </article>
             <article class="cycle-item reveal">
-              <strong>协作调整</strong>
-              <p>开启云同步后，可与教练在授权范围内共享训练资料并协作调整。</p>
+              <strong>专业周期工具</strong>
+              <p>
+                提供引导式定制、自建计划、DUP 调度、Nuckols 组合、5/3/1 Leader/Anchor、Peaking 与比赛倒计时等入口。
+                <em>计划完成后直接进入逐日训练与历史复盘。</em>
+              </p>
             </article>
           </div>
         </div>
@@ -1198,14 +1308,27 @@
       <section class="product-section" id="product">
         <div class="shell">
           <div class="product-header reveal">
-            <p class="eyebrow">真实产品界面</p>
-            <h2>复杂训练逻辑，落到清晰的每一天。</h2>
+            <p class="eyebrow">当前可运行界面</p>
+            <h2>真正的专业工具，不藏在概念里。</h2>
             <p class="lead">
-              从计划概览、动作查找，到周期调度，界面围绕训练现场的效率设计。
+              以下界面均来自项目当前版本：计划构建器、周期详情与 DUP 调度器。
             </p>
           </div>
 
           <div class="screens" aria-label="TrainPhase 产品界面截图">
+            <figure class="screen reveal">
+              <img
+                src="assets/product-builder.png"
+                alt="TrainPhase 专业计划构建器的周期编辑界面"
+                width="375"
+                height="812"
+                loading="lazy"
+              />
+              <figcaption>
+                <strong>计划构建器</strong>
+                <span>周期、结构、强度与验证集中编辑</span>
+              </figcaption>
+            </figure>
             <figure class="screen reveal">
               <img
                 src="assets/product-plan.png"
@@ -1214,15 +1337,10 @@
                 height="1545"
                 loading="lazy"
               />
-            </figure>
-            <figure class="screen reveal">
-              <img
-                src="assets/product-library.png"
-                alt="TrainPhase 动作库界面"
-                width="375"
-                height="900"
-                loading="lazy"
-              />
+              <figcaption>
+                <strong>计划详情</strong>
+                <span>训练规则、阶段安排与可选项清晰呈现</span>
+              </figcaption>
             </figure>
             <figure class="screen reveal">
               <img
@@ -1232,6 +1350,10 @@
                 height="1240"
                 loading="lazy"
               />
+              <figcaption>
+                <strong>DUP 调度器</strong>
+                <span>按训练日定义强度与容量波动</span>
+              </figcaption>
             </figure>
           </div>
           <p class="screens-note">界面内容来自项目当前可运行版本，发布版本可能继续优化。</p>
@@ -1241,33 +1363,39 @@
       <section id="capabilities">
         <div class="shell">
           <div class="capability-header reveal">
-            <h2>为长期训练准备的工具。</h2>
+            <h2>面向专业训练者，保留足够的控制权。</h2>
             <p class="lead">
-              不追求堆满功能，而是把训练者反复需要的计划、执行、计算和协作做好。
+              不强迫你接受黑箱计划。可以从成熟模板开始，也可以建立自己的周期化训练体系。
             </p>
           </div>
 
           <div class="capability-grid">
             <article class="capability-card plan-card reveal">
-              <h3>周期计划</h3>
-              <p>覆盖多种主流力量训练逻辑，支持模板开始、引导式定制与周期调整。</p>
-              <div class="plan-methods" aria-label="支持的部分训练方法">
-                <span>5/3/1</span>
-                <span>Nuckols</span>
-                <span>GZCL</span>
-                <span>DUP</span>
+              <h3>多条计划入口</h3>
+              <p>引导式定制、自建计划、经典模板与专项构建器并存，适配不同经验和控制深度。</p>
+              <div class="plan-methods" aria-label="支持的部分计划能力">
+                <span>完整大周期</span>
+                <span>Nuckols 组合</span>
+                <span>Leader/Anchor</span>
+                <span>Peaking</span>
+                <span>DUP 调度</span>
               </div>
             </article>
 
             <article class="capability-card library-card reveal">
-              <h3>动作库</h3>
-              <p>按主项、变式、器械和肌群快速筛选。</p>
-              <strong>多维筛选</strong>
+              <h3>计划可以继续编辑</h3>
+              <p>周期、训练日、动作 slot、组次、强度与进阶方式都能回到同一工作区调整。</p>
+              <strong>验证后保存</strong>
             </article>
 
             <article class="capability-card sync-card reveal">
-              <h3>强度工具与云同步</h3>
-              <p>结合 RPE、TM、1RM 等训练工具记录负荷，并在授权后支持云端同步与教练协作。</p>
+              <h3>计划与执行不脱节</h3>
+              <p>百分比、RPE、TM 与 1RM 等处方会进入逐日训练，完成记录继续用于进阶和阶段判断。</p>
+            </article>
+
+            <article class="capability-card revision-card reveal">
+              <h3>版本与协作有边界</h3>
+              <p>重要计划修改自动留档。开启云同步后，可在明确授权范围内与教练共享训练资料。</p>
             </article>
           </div>
         </div>
@@ -1330,7 +1458,7 @@
         <div class="shell">
           <div class="cta-panel reveal">
             <div>
-              <h2>认真训练，也认真记录为什么进步。</h2>
+              <h2>把真正想练的周期，完整地跑下去。</h2>
               <p>TrainPhase 微信小程序首发免费开放，产品发布与合作信息可通过项目邮箱联系。</p>
             </div>
             <a class="button button-primary" href="mailto:hxiong443@gmail.com">联系项目</a>
