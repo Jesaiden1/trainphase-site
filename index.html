@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta
       name="description"
-      content="TrainPhase 是面向认真训练者与教练的专业力量训练计划系统，覆盖计划构建、计划编辑、大周期衔接、逐日执行、历史复盘与云同步。"
+      content="TrainPhase 是面向认真训练者与教练的专业力量训练计划系统，支持计划构建、逐日执行、历史复盘，以及受控连接外部 AI 助手。"
     />
-    <meta name="theme-color" content="#0b0d0c" />
+    <meta name="theme-color" content="#0b0e0c" />
     <meta name="color-scheme" content="dark" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="zh_CN" />
     <meta property="og:title" content="TrainPhase | 专业力量训练计划系统" />
     <meta
       property="og:description"
-      content="从计划构建、编辑与大周期衔接，到逐日执行和复盘。"
+      content="从计划来源、周期结构和训练执行，到历史反馈与下一阶段。"
     />
     <meta property="og:image" content="assets/trainphase-training-hero.webp" />
     <title>TrainPhase | 专业力量训练计划系统</title>
@@ -23,21 +23,25 @@
     <style>
       :root {
         color-scheme: dark;
-        --bg: #0b0d0c;
-        --surface: #121512;
-        --surface-raised: #181c18;
-        --surface-soft: #1e231e;
-        --text: #f3f4ef;
-        --muted: #a4aaa1;
-        --faint: #737a72;
-        --line: #2a302a;
-        --accent: #ff7a1a;
-        --accent-soft: #3a2111;
-        --accent-ink: #17110d;
-        --max-width: 1240px;
-        --radius: 16px;
-        --shadow: 0 28px 80px rgba(0, 0, 0, 0.3);
-        --display: "DIN Alternate", "Bahnschrift", "Arial Narrow", "PingFang SC",
+        --bg: #0b0e0c;
+        --surface: #121612;
+        --surface-2: #171c18;
+        --surface-3: #1d231e;
+        --text: #f2f3ee;
+        --muted: #a4aba2;
+        --faint: #747d74;
+        --line: #2a312b;
+        --line-strong: #39423a;
+        --accent: #f47a22;
+        --accent-hover: #ff8b38;
+        --accent-soft: rgba(244, 122, 34, 0.11);
+        --accent-ink: #17110c;
+        --danger: #e66a64;
+        --max-width: 1280px;
+        --radius: 14px;
+        --radius-small: 10px;
+        --shadow: 0 28px 72px rgba(2, 5, 3, 0.34);
+        --display: "Bahnschrift", "DIN Alternate", "Arial Narrow", "PingFang SC",
           "Microsoft YaHei", sans-serif;
         --body: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui,
           sans-serif;
@@ -58,25 +62,12 @@
         margin: 0;
         min-width: 320px;
         overflow-x: hidden;
-        background:
-          radial-gradient(circle at 88% 2%, rgba(255, 122, 26, 0.08), transparent 24rem),
-          var(--bg);
+        background: var(--bg);
         color: var(--text);
         font-family: var(--body);
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
-      }
-
-      body::before {
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-        background-size: 100% 48px;
-        content: "";
-        mask-image: linear-gradient(to bottom, black, transparent 72%);
       }
 
       img {
@@ -99,7 +90,7 @@
       }
 
       :focus-visible {
-        outline: 3px solid rgba(255, 122, 26, 0.7);
+        outline: 3px solid rgba(244, 122, 34, 0.78);
         outline-offset: 4px;
       }
 
@@ -110,7 +101,7 @@
         z-index: 100;
         padding: 10px 14px;
         transform: translateY(-160%);
-        border-radius: 10px;
+        border-radius: var(--radius-small);
         background: var(--accent);
         color: var(--accent-ink);
         font-weight: 800;
@@ -122,7 +113,7 @@
       }
 
       .shell {
-        width: min(calc(100% - 40px), var(--max-width));
+        width: min(calc(100% - 48px), var(--max-width));
         margin-inline: auto;
       }
 
@@ -130,124 +121,71 @@
         position: sticky;
         top: 0;
         z-index: 20;
-        height: 72px;
+        height: 68px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        background: rgba(11, 13, 12, 0.88);
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
+        background: rgba(11, 14, 12, 0.92);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
       }
 
       .nav {
         display: flex;
+        height: 100%;
         align-items: center;
         justify-content: space-between;
-        height: 100%;
+        gap: 32px;
       }
 
       .brand {
         display: inline-flex;
-        align-items: center;
-        gap: 12px;
         min-width: max-content;
+        align-items: center;
+        gap: 11px;
         font-family: var(--display);
-        font-size: 20px;
+        font-size: 19px;
         font-weight: 800;
         letter-spacing: -0.02em;
       }
 
       .brand img {
-        width: 36px;
-        height: 36px;
+        width: 34px;
+        height: 34px;
         border: 1px solid rgba(255, 255, 255, 0.09);
-        border-radius: 10px;
+        border-radius: var(--radius-small);
       }
 
       .nav-links {
         display: flex;
         align-items: center;
-        gap: 28px;
-        color: #c6cac3;
+        gap: 26px;
+        color: #c6cbc4;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 650;
       }
 
-      .nav-links > a:not(.nav-cta) {
+      .nav-links a {
+        white-space: nowrap;
         transition:
           color 180ms ease,
           transform 180ms ease;
       }
 
-      .nav-links > a:not(.nav-cta):hover {
+      .nav-links a:hover {
         color: var(--text);
         transform: translateY(-1px);
       }
 
-      .nav-cta,
-      .button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 48px;
-        padding: 0 20px;
-        border: 1px solid transparent;
-        border-radius: 12px;
-        cursor: pointer;
-        font-weight: 800;
-        line-height: 1;
-        white-space: nowrap;
-        transition:
-          transform 180ms ease,
-          background-color 180ms ease,
-          border-color 180ms ease,
-          color 180ms ease;
-      }
-
-      .nav-cta {
-        min-height: 42px;
-        padding-inline: 16px;
-        background: var(--accent);
-        color: var(--accent-ink);
-      }
-
-      .button-primary {
-        background: var(--accent);
-        color: var(--accent-ink);
-      }
-
-      .button-secondary {
-        border-color: #3a413a;
-        background: #151815;
-        color: var(--text);
-      }
-
-      .nav-cta:hover,
-      .button-primary:hover {
-        background: #ff8b35;
-        transform: translateY(-2px);
-      }
-
-      .button-secondary:hover {
-        border-color: #626a61;
-        background: #1b1f1b;
-        transform: translateY(-2px);
-      }
-
-      .nav-cta:active,
-      .button:active {
-        transform: translateY(1px) scale(0.985);
-      }
-
       .menu-button {
         display: none;
-        min-width: 56px;
+        min-width: 58px;
         min-height: 42px;
         border: 1px solid var(--line);
-        border-radius: 12px;
+        border-radius: var(--radius-small);
         background: var(--surface);
         color: var(--text);
         cursor: pointer;
         font-size: 13px;
-        font-weight: 700;
+        font-weight: 750;
       }
 
       main {
@@ -256,17 +194,8 @@
 
       section {
         position: relative;
-        padding-block: 112px;
-        scroll-margin-top: 72px;
-      }
-
-      .eyebrow {
-        margin: 0 0 18px;
-        color: var(--accent);
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
+        padding-block: 104px;
+        scroll-margin-top: 68px;
       }
 
       h1,
@@ -283,76 +212,139 @@
       }
 
       h1 {
-        max-width: 720px;
+        max-width: 700px;
         margin-bottom: 24px;
-        font-size: clamp(46px, 5.3vw, 74px);
+        font-size: clamp(48px, 5.4vw, 76px);
         font-weight: 800;
-        letter-spacing: -0.055em;
+        letter-spacing: -0.052em;
         line-height: 0.98;
       }
 
       h1 span {
         display: block;
-        white-space: nowrap;
       }
 
       h2 {
-        max-width: 760px;
-        margin-bottom: 22px;
-        font-size: clamp(36px, 4.6vw, 64px);
+        max-width: 780px;
+        margin-bottom: 20px;
+        font-size: clamp(38px, 4.4vw, 62px);
         font-weight: 800;
-        letter-spacing: -0.045em;
+        letter-spacing: -0.044em;
         line-height: 1.02;
       }
 
       h3 {
         margin-bottom: 10px;
-        font-size: 22px;
-        letter-spacing: -0.02em;
+        font-size: 23px;
+        letter-spacing: -0.025em;
         line-height: 1.2;
       }
 
       .lead {
-        max-width: 620px;
-        color: #bdc2ba;
-        font-size: clamp(17px, 1.8vw, 21px);
-        line-height: 1.75;
+        max-width: 650px;
+        color: #bdc3bb;
+        font-size: clamp(17px, 1.7vw, 20px);
+        line-height: 1.72;
+      }
+
+      .section-copy {
+        max-width: 760px;
+        margin-bottom: 44px;
+      }
+
+      .section-copy p {
+        max-width: 640px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 48px;
+        padding: 0 20px;
+        border: 1px solid transparent;
+        border-radius: var(--radius-small);
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: 800;
+        line-height: 1;
+        white-space: nowrap;
+        transition:
+          transform 180ms ease,
+          background-color 180ms ease,
+          border-color 180ms ease,
+          color 180ms ease;
+      }
+
+      .button-primary {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      .button-primary:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+      }
+
+      .button-secondary {
+        border-color: var(--line-strong);
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .button-secondary:hover {
+        border-color: #626c63;
+        background: var(--surface-2);
+        transform: translateY(-2px);
+      }
+
+      .button:active {
+        transform: translateY(1px) scale(0.985);
+      }
+
+      .text-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #d6dbd4;
+        font-size: 14px;
+        font-weight: 750;
+      }
+
+      .text-link:hover {
+        color: var(--accent);
       }
 
       .hero {
         display: grid;
-        min-height: calc(100dvh - 72px);
-        padding-block: 56px;
-        align-items: center;
+        min-height: calc(100dvh - 68px);
+        padding-block: 48px;
         grid-template-columns: minmax(0, 1.05fr) minmax(380px, 0.95fr);
-        gap: clamp(48px, 7vw, 104px);
-      }
-
-      .hero-copy {
-        position: relative;
-        z-index: 2;
+        align-items: center;
+        gap: clamp(48px, 7vw, 100px);
       }
 
       .hero-copy .lead {
-        max-width: 570px;
+        max-width: 590px;
         margin-bottom: 30px;
       }
 
       .hero-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
+        align-items: center;
+        gap: 20px;
       }
 
       .hero-visual {
         position: relative;
-        align-self: center;
         width: 100%;
-        height: min(72dvh, 680px);
+        height: min(72dvh, 720px);
         min-height: 520px;
         margin: 0;
         overflow: hidden;
-        border: 1px solid #2b302b;
         border-radius: var(--radius);
         background: var(--surface);
         box-shadow: var(--shadow);
@@ -361,361 +353,572 @@
       .hero-visual::after {
         position: absolute;
         inset: 0;
-        pointer-events: none;
-        background:
-          linear-gradient(to top, rgba(7, 9, 8, 0.78), transparent 42%),
-          linear-gradient(to right, rgba(9, 11, 10, 0.25), transparent 42%);
+        background: linear-gradient(to top, rgba(5, 8, 6, 0.74), transparent 48%);
         content: "";
+        pointer-events: none;
       }
 
-      .hero-visual img {
+      .hero-visual > img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: 56% center;
+        object-position: center 36%;
       }
 
       .hero-caption {
         position: absolute;
-        right: 28px;
-        bottom: 24px;
-        left: 28px;
-        z-index: 2;
+        right: 24px;
+        bottom: 22px;
+        left: 24px;
+        z-index: 1;
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
-        gap: 24px;
+        gap: 20px;
       }
 
       .hero-caption strong {
-        max-width: 300px;
+        max-width: 360px;
         font-family: var(--display);
-        font-size: 24px;
-        letter-spacing: -0.025em;
-        line-height: 1.15;
+        font-size: clamp(22px, 2.8vw, 34px);
+        letter-spacing: -0.035em;
+        line-height: 1.08;
       }
 
       .hero-caption img {
-        flex: 0 0 auto;
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
+        width: 42px;
+        height: 42px;
+        border-radius: var(--radius-small);
       }
 
-      .proof {
-        padding-block: 0;
+      .system-section {
         border-top: 1px solid var(--line);
-        border-bottom: 1px solid var(--line);
+        background: #0e120f;
       }
 
-      .proof-grid {
+      .architecture {
         display: grid;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        grid-template-columns: 0.78fr 1.22fr;
+        overflow: hidden;
+      }
+
+      .architecture-intro {
+        padding: clamp(30px, 5vw, 58px);
+        border-right: 1px solid var(--line);
+        background:
+          linear-gradient(145deg, rgba(244, 122, 34, 0.13), transparent 50%),
+          #141915;
+      }
+
+      .architecture-intro h3 {
+        max-width: 380px;
+        margin-bottom: 18px;
+        font-size: clamp(30px, 4vw, 50px);
+      }
+
+      .architecture-intro p {
+        max-width: 450px;
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .architecture-flow {
         margin: 0;
         padding: 0;
         list-style: none;
-        grid-template-columns: 1.08fr 0.92fr 1.08fr 0.92fr;
       }
 
-      .proof-item {
-        position: relative;
-        min-height: 178px;
-        padding: 34px 38px;
-      }
-
-      .proof-item + .proof-item {
-        border-left: 1px solid var(--line);
-      }
-
-      .proof-value {
-        display: block;
-        margin-bottom: 10px;
-        color: var(--text);
-        font-family: var(--display);
-        font-size: clamp(23px, 2.1vw, 31px);
-        font-weight: 800;
-        letter-spacing: -0.035em;
-      }
-
-      .proof-item:not(:last-child)::after {
-        position: absolute;
-        top: 50%;
-        right: -12px;
-        z-index: 2;
+      .architecture-flow li {
         display: grid;
-        width: 24px;
-        height: 24px;
-        transform: translateY(-50%);
-        border: 1px solid var(--line);
-        border-radius: 50%;
-        background: var(--bg);
-        color: var(--accent);
-        content: "›";
-        font-size: 20px;
-        line-height: 1;
-        place-items: center;
+        min-height: 112px;
+        padding: 24px 30px;
+        grid-template-columns: minmax(150px, 0.45fr) minmax(0, 1fr);
+        align-items: center;
+        gap: 28px;
       }
 
-      .proof-item p {
-        max-width: 280px;
-        margin-bottom: 0;
+      .architecture-flow li + li {
+        border-top: 1px solid var(--line);
+      }
+
+      .architecture-flow strong {
+        font-family: var(--display);
+        font-size: 20px;
+      }
+
+      .architecture-flow span {
         color: var(--muted);
         font-size: 14px;
       }
 
-      .cycle-layout {
+      .architecture-flow li:last-child {
+        background: var(--accent-soft);
+      }
+
+      .architecture-flow li:last-child strong {
+        color: #ffc394;
+      }
+
+      .interfaces-section {
+        background: var(--bg);
+      }
+
+      .interface-workbench {
         display: grid;
-        align-items: start;
-        grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
-        gap: clamp(56px, 8vw, 120px);
+        min-height: 760px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #0f130f;
+        grid-template-columns: 230px minmax(340px, 430px) minmax(280px, 1fr);
+        overflow: hidden;
+        box-shadow: var(--shadow);
       }
 
-      .cycle-intro {
-        position: sticky;
-        top: 124px;
+      .interface-tabs {
+        display: flex;
+        padding: 18px;
+        border-right: 1px solid var(--line);
+        flex-direction: column;
+        gap: 8px;
+        background: #0c100d;
       }
 
-      .cycle-intro p {
-        max-width: 500px;
-        margin-bottom: 0;
+      .interface-tab {
+        display: grid;
+        min-height: 76px;
+        padding: 14px;
+        border: 1px solid transparent;
+        border-radius: var(--radius-small);
+        background: transparent;
         color: var(--muted);
+        cursor: pointer;
+        text-align: left;
+        transition:
+          background-color 180ms ease,
+          border-color 180ms ease,
+          color 180ms ease,
+          transform 180ms ease;
       }
 
-      .cycle-list {
-        border-top: 1px solid var(--line);
+      .interface-tab:hover {
+        background: var(--surface);
+        color: var(--text);
+        transform: translateX(2px);
       }
 
-      .cycle-item {
-        display: grid;
-        padding: 26px 0;
-        border-bottom: 1px solid var(--line);
-        grid-template-columns: minmax(120px, 0.42fr) minmax(0, 1fr);
-        gap: 32px;
+      .interface-tab.is-active {
+        border-color: rgba(244, 122, 34, 0.42);
+        background: var(--accent-soft);
+        color: var(--text);
       }
 
-      .cycle-item strong {
-        color: var(--accent);
-        font-family: var(--display);
-        font-size: 20px;
-        letter-spacing: -0.02em;
-      }
-
-      .cycle-item p {
-        margin-bottom: 0;
-        color: #c6cbc3;
-      }
-
-      .cycle-item em {
+      .interface-tab strong,
+      .interface-tab span {
         display: block;
-        margin-top: 8px;
+      }
+
+      .interface-tab strong {
+        font-family: var(--display);
+        font-size: 17px;
+      }
+
+      .interface-tab span {
+        margin-top: 3px;
         color: var(--faint);
-        font-size: 13px;
-        font-style: normal;
+        font-size: 12px;
       }
 
-      .product-section {
-        overflow: hidden;
-        border-top: 1px solid var(--line);
-        background:
-          radial-gradient(circle at 50% 30%, rgba(255, 122, 26, 0.06), transparent 28rem),
-          var(--surface);
-      }
-
-      .product-header {
-        max-width: 740px;
-        margin-bottom: 60px;
-      }
-
-      .product-header .lead {
-        margin-bottom: 0;
-      }
-
-      .screens {
+      .interface-device-area {
         display: grid;
-        align-items: start;
-        grid-template-columns: 1.08fr 0.88fr 0.94fr;
-        gap: 22px;
+        padding: 28px 24px;
+        border-right: 1px solid var(--line);
+        place-items: center;
+        background:
+          linear-gradient(180deg, rgba(244, 122, 34, 0.04), transparent 36%),
+          #111511;
       }
 
-      .screen {
+      .device-frame {
+        width: min(100%, 382px);
+        padding: 9px;
         overflow: hidden;
-        border: 1px solid #303630;
-        border-radius: 28px;
-        background: #0c0f0d;
-        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.36);
+        border: 1px solid #333b34;
+        border-radius: 24px;
+        background: #080b09;
+        box-shadow: 0 24px 54px rgba(1, 3, 2, 0.42);
       }
 
-      .screen:nth-child(2) {
-        margin-top: 72px;
+      .device-topbar {
+        display: flex;
+        height: 28px;
+        padding: 0 10px;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--faint);
+        font-size: 10px;
       }
 
-      .screen:nth-child(3) {
-        margin-top: 28px;
+      .device-topbar span:last-child {
+        color: #b9c0b8;
       }
 
-      .screen img {
+      .screen-viewport {
+        height: 650px;
+        overflow-y: auto;
+        border-radius: 16px;
+        background: #0d110e;
+        scrollbar-color: #4a534b #141915;
+        scrollbar-width: thin;
+      }
+
+      .screen-viewport img {
         width: 100%;
         height: auto;
       }
 
-      .screen figcaption {
-        padding: 18px 20px 20px;
-        border-top: 1px solid var(--line);
-        background: #111411;
+      .interface-details {
+        display: flex;
+        padding: clamp(30px, 4vw, 48px);
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 38px;
       }
 
-      .screen figcaption strong,
-      .screen figcaption span {
+      .interface-path {
         display: block;
+        margin-bottom: 16px;
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 800;
       }
 
-      .screen figcaption strong {
+      .interface-details h3 {
+        margin-bottom: 16px;
+        font-size: clamp(30px, 3.4vw, 46px);
+      }
+
+      .interface-summary {
+        max-width: 430px;
+        color: var(--muted);
+        font-size: 16px;
+      }
+
+      .interface-facts {
+        display: grid;
+        margin-top: 32px;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .interface-fact {
+        min-height: 90px;
+        padding: 14px;
+        border-radius: var(--radius-small);
+        background: var(--surface-2);
+        color: #c8cec7;
+        font-size: 13px;
+      }
+
+      .interface-note {
+        padding-top: 22px;
+        border-top: 1px solid var(--line);
+        color: var(--faint);
+        font-size: 13px;
+      }
+
+      .interface-note strong {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--text);
+        font-family: var(--display);
+        font-size: 16px;
+      }
+
+      .capability-section {
+        border-top: 1px solid var(--line);
+        background: #0e120f;
+      }
+
+      .capability-layout {
+        display: grid;
+        grid-template-columns: minmax(300px, 0.7fr) minmax(0, 1.3fr);
+        align-items: start;
+        gap: clamp(46px, 8vw, 110px);
+      }
+
+      .capability-copy {
+        position: sticky;
+        top: 108px;
+      }
+
+      .capability-copy p {
+        max-width: 480px;
+        color: var(--muted);
+      }
+
+      .capability-groups {
+        display: grid;
+        gap: 34px;
+      }
+
+      .capability-group {
+        padding-bottom: 34px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .capability-group:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+
+      .capability-group h3 {
+        margin-bottom: 14px;
+      }
+
+      .capability-group p {
+        max-width: 680px;
+        margin-bottom: 18px;
+        color: var(--muted);
+      }
+
+      .capability-terms {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .capability-terms span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-small);
+        color: #c9cec7;
+        font-size: 12px;
+      }
+
+      .agent-section {
+        border-top: 1px solid var(--line);
+        background: var(--bg);
+      }
+
+      .agent-layout {
+        display: grid;
+        grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);
+        align-items: start;
+        gap: clamp(44px, 8vw, 110px);
+      }
+
+      .agent-copy p {
+        max-width: 510px;
+        color: var(--muted);
+      }
+
+      .agent-boundaries {
+        margin: 30px 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .agent-boundaries li {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+        color: #c8cec7;
+        font-size: 14px;
+      }
+
+      .agent-details {
+        margin-top: 22px;
+        border-top: 1px solid var(--line);
+      }
+
+      .agent-details summary {
+        padding: 18px 0;
+        color: var(--text);
+        cursor: pointer;
+        font-weight: 750;
+      }
+
+      .agent-details ol {
+        margin: 0 0 22px;
+        padding-left: 22px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .agent-details li + li {
+        margin-top: 8px;
+      }
+
+      .connection-lab {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .lab-header {
+        display: flex;
+        min-height: 54px;
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--line);
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .lab-header strong {
+        color: #f1b98e;
+      }
+
+      .lab-body {
+        padding: clamp(26px, 4vw, 42px);
+      }
+
+      .lab-state {
+        display: inline-flex;
+        margin-bottom: 15px;
+        padding: 7px 10px;
+        border: 1px solid rgba(244, 122, 34, 0.35);
+        border-radius: var(--radius-small);
+        background: var(--accent-soft);
+        color: #f5bd91;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .lab-body h3 {
+        font-size: clamp(28px, 3.6vw, 44px);
+      }
+
+      .lab-body > p {
+        max-width: 590px;
+        color: var(--muted);
+      }
+
+      .lab-permissions,
+      .lab-request,
+      .lab-activity {
+        margin-top: 26px;
+        padding: 18px;
+        border: 1px solid #303831;
+        border-radius: var(--radius-small);
+        background: #0e120f;
+      }
+
+      .lab-panel-head {
+        display: flex;
+        margin-bottom: 14px;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .lab-panel-head strong {
+        font-family: var(--display);
+        font-size: 17px;
+      }
+
+      .lab-panel-head span {
+        color: var(--faint);
+        font-size: 12px;
+        text-align: right;
+      }
+
+      .lab-permission-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .lab-permission-grid span {
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: var(--surface-2);
+        color: #c8cec7;
+        font-size: 13px;
+      }
+
+      .lab-request strong,
+      .lab-activity strong {
+        display: block;
         margin-bottom: 4px;
         font-family: var(--display);
         font-size: 18px;
       }
 
-      .screen figcaption span {
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.5;
-      }
-
-      .screens-note {
-        margin: 30px 0 0;
-        color: var(--faint);
-        font-size: 13px;
-      }
-
-      .capability-header {
-        max-width: 720px;
-        margin-bottom: 48px;
-      }
-
-      .capability-grid {
-        display: grid;
-        min-height: 660px;
-        grid-template-columns: 1.28fr 0.72fr;
-        grid-template-rows: 1fr 1fr 1fr;
-        gap: 18px;
-      }
-
-      .capability-card {
-        position: relative;
-        overflow: hidden;
-        padding: 32px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: var(--surface);
-      }
-
-      .capability-card p {
-        max-width: 460px;
+      .lab-request p,
+      .lab-activity p {
         margin-bottom: 0;
         color: var(--muted);
+        font-size: 13px;
       }
 
-      .capability-card strong {
-        display: block;
-        margin-top: 28px;
-        color: var(--text);
-        font-family: var(--display);
-        font-size: clamp(30px, 4vw, 58px);
-        letter-spacing: -0.045em;
-        line-height: 1;
-      }
-
-      .plan-card {
-        grid-row: 1 / 4;
-        background:
-          linear-gradient(155deg, rgba(255, 122, 26, 0.1), transparent 45%),
-          var(--surface);
-      }
-
-      .plan-methods {
-        position: absolute;
-        right: 32px;
-        bottom: 32px;
-        left: 32px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+      .lab-actions {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 26px;
         gap: 10px;
       }
 
-      .plan-methods span {
-        padding: 14px 16px;
-        border: 1px solid rgba(255, 122, 26, 0.2);
-        border-radius: 12px;
-        background: rgba(255, 122, 26, 0.06);
-        color: #f0b285;
-        font-family: var(--display);
-        font-size: 18px;
-        font-weight: 700;
+      .lab-reset {
+        min-height: 48px;
+        padding: 0 16px;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-weight: 750;
       }
 
-      .library-card {
-        background: var(--accent);
-        color: var(--accent-ink);
-      }
-
-      .library-card h3,
-      .library-card strong {
-        color: var(--accent-ink);
-      }
-
-      .library-card p {
-        color: rgba(23, 17, 13, 0.72);
-      }
-
-      .sync-card {
-        background:
-          linear-gradient(140deg, rgba(255, 255, 255, 0.025), transparent 54%),
-          var(--surface-soft);
-      }
-
-      .revision-card {
-        background:
-          linear-gradient(150deg, rgba(255, 122, 26, 0.055), transparent 62%),
-          #141814;
+      .lab-reset:hover {
+        color: var(--text);
       }
 
       .trust-section {
         border-top: 1px solid var(--line);
+        background: #0e120f;
       }
 
       .trust-layout {
         display: grid;
+        grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.2fr);
         align-items: start;
-        grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
-        gap: clamp(48px, 8vw, 120px);
+        gap: clamp(46px, 8vw, 110px);
       }
 
-      .trust-copy .lead {
-        margin-bottom: 28px;
+      .trust-copy p {
+        max-width: 500px;
+        color: var(--muted);
       }
 
       .trust-points {
         display: grid;
-        margin-top: 38px;
+        margin-top: 30px;
         grid-template-columns: 1fr 1fr;
-        gap: 24px;
+        gap: 22px;
       }
 
       .trust-point {
-        padding-top: 20px;
+        padding-top: 16px;
         border-top: 1px solid var(--line);
       }
 
       .trust-point strong {
         display: block;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         font-family: var(--display);
-        font-size: 18px;
+        font-size: 17px;
       }
 
       .trust-point p {
         margin-bottom: 0;
         color: var(--muted);
-        font-size: 14px;
+        font-size: 13px;
       }
 
       .legal-list {
@@ -727,11 +930,11 @@
 
       .legal-link {
         display: grid;
-        align-items: center;
-        min-height: 104px;
+        min-height: 106px;
         padding: 24px 26px;
         grid-template-columns: 1fr auto;
-        gap: 20px;
+        align-items: center;
+        gap: 24px;
         transition: background-color 180ms ease;
       }
 
@@ -740,14 +943,18 @@
       }
 
       .legal-link:hover {
-        background: var(--surface-soft);
+        background: var(--surface-2);
+      }
+
+      .legal-link strong,
+      .legal-link span {
+        display: block;
       }
 
       .legal-link strong {
-        display: block;
         margin-bottom: 4px;
         font-family: var(--display);
-        font-size: 20px;
+        font-size: 19px;
       }
 
       .legal-link span {
@@ -757,40 +964,53 @@
 
       .legal-link b {
         color: var(--accent);
-        font-size: 24px;
+        font-size: 22px;
       }
 
-      .final-cta {
-        padding-top: 64px;
+      .access-section {
+        padding-block: 72px 36px;
+        background: var(--bg);
       }
 
-      .cta-panel {
+      .access-panel {
         display: grid;
-        overflow: hidden;
-        padding: clamp(36px, 6vw, 76px);
-        border: 1px solid rgba(255, 122, 26, 0.32);
+        padding: clamp(32px, 5vw, 62px);
+        border: 1px solid rgba(244, 122, 34, 0.32);
         border-radius: var(--radius);
         background:
-          radial-gradient(circle at 92% 16%, rgba(255, 122, 26, 0.22), transparent 18rem),
+          linear-gradient(145deg, rgba(244, 122, 34, 0.13), transparent 55%),
           var(--surface);
         grid-template-columns: minmax(0, 1fr) auto;
         align-items: end;
-        gap: 42px;
+        gap: 44px;
       }
 
-      .cta-panel h2 {
-        max-width: 760px;
+      .access-panel h2 {
         margin-bottom: 14px;
       }
 
-      .cta-panel p {
-        max-width: 610px;
+      .access-panel p {
+        max-width: 620px;
         margin-bottom: 0;
         color: var(--muted);
       }
 
+      .availability {
+        display: flex;
+        margin-top: 24px;
+        flex-wrap: wrap;
+        gap: 10px 18px;
+        color: var(--faint);
+        font-size: 13px;
+      }
+
+      .availability strong {
+        color: #d7dcd5;
+        font-weight: 700;
+      }
+
       .site-footer {
-        margin-top: 112px;
+        margin-top: 74px;
         padding-block: 42px;
         border-top: 1px solid var(--line);
         color: var(--muted);
@@ -800,14 +1020,14 @@
       .footer-grid {
         display: grid;
         grid-template-columns: 1fr auto;
-        gap: 32px;
+        gap: 40px;
       }
 
       .footer-brand {
         display: flex;
-        align-items: center;
-        gap: 12px;
         margin-bottom: 18px;
+        align-items: center;
+        gap: 11px;
         color: var(--text);
         font-family: var(--display);
         font-size: 18px;
@@ -840,7 +1060,7 @@
       }
 
       .copyright {
-        margin: 28px 0 0;
+        margin: 24px 0 0;
         color: var(--faint);
       }
 
@@ -851,10 +1071,10 @@
 
       .js .reveal {
         opacity: 0;
-        transform: translateY(22px);
+        transform: translateY(18px);
         transition:
-          opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
-          transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+          opacity 640ms cubic-bezier(0.16, 1, 0.3, 1),
+          transform 640ms cubic-bezier(0.16, 1, 0.3, 1);
       }
 
       .js .reveal.is-visible {
@@ -862,67 +1082,86 @@
         transform: translateY(0);
       }
 
-      @media (max-width: 980px) {
+      @media (max-width: 1080px) {
         .nav-links {
           gap: 18px;
         }
 
+        .interface-workbench {
+          grid-template-columns: 190px minmax(320px, 390px) minmax(260px, 1fr);
+        }
+
+        .interface-details {
+          padding: 30px;
+        }
+      }
+
+      @media (max-width: 940px) {
         .hero {
-          grid-template-columns: 1fr 0.85fr;
+          grid-template-columns: 1fr 0.86fr;
           gap: 38px;
         }
 
         .hero-visual {
-          min-height: 500px;
+          min-height: 480px;
         }
 
-        .proof-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-
-        .proof-item:nth-child(3) {
-          border-top: 1px solid var(--line);
-          border-left: 0;
-        }
-
-        .proof-item:nth-child(4) {
-          border-top: 1px solid var(--line);
-        }
-
-        .proof-item::after {
-          display: none !important;
-        }
-
-        .cycle-layout,
+        .architecture,
+        .capability-layout,
+        .agent-layout,
         .trust-layout {
           grid-template-columns: 1fr;
         }
 
-        .cycle-intro {
+        .architecture-intro {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .capability-copy {
           position: static;
         }
 
-        .trust-layout {
-          gap: 50px;
+        .interface-workbench {
+          min-height: 0;
+          grid-template-columns: 220px minmax(340px, 0.9fr) minmax(260px, 1.1fr);
         }
 
-        .capability-grid {
-          grid-template-columns: 1fr 1fr;
-          grid-template-rows: auto auto auto;
-        }
-
-        .plan-card {
-          grid-row: auto;
-          grid-column: 1 / 3;
-          min-height: 430px;
-        }
-
-        .revision-card {
-          grid-column: 1 / 3;
+        .screen-viewport {
+          height: 590px;
         }
       }
 
-      @media (max-width: 760px) {
+      @media (max-width: 820px) {
+        .nav-links {
+          gap: 14px;
+          font-size: 13px;
+        }
+
+        .interface-workbench {
+          grid-template-columns: minmax(320px, 0.9fr) minmax(280px, 1.1fr);
+        }
+
+        .interface-tabs {
+          grid-column: 1 / -1;
+          display: grid;
+          overflow-x: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+          grid-template-columns: repeat(4, minmax(150px, 1fr));
+          scrollbar-width: none;
+        }
+
+        .interface-tabs::-webkit-scrollbar {
+          display: none;
+        }
+
+        .interface-device-area {
+          border-right: 1px solid var(--line);
+        }
+      }
+
+      @media (max-width: 720px) {
         .shell {
           width: min(calc(100% - 32px), var(--max-width));
         }
@@ -943,10 +1182,10 @@
           right: 16px;
           left: 16px;
           display: none;
-          padding: 14px;
+          padding: 12px;
           border: 1px solid var(--line);
           border-radius: var(--radius);
-          background: #111411;
+          background: #111511;
           box-shadow: var(--shadow);
           flex-direction: column;
           align-items: stretch;
@@ -957,141 +1196,85 @@
           display: flex;
         }
 
-        .nav-links > a {
-          padding: 12px 14px;
-          border-radius: 10px;
-        }
-
-        .nav-cta {
-          margin-top: 4px;
+        .nav-links a {
+          padding: 11px 13px;
+          border-radius: var(--radius-small);
         }
 
         section {
-          padding-block: 80px;
+          padding-block: 78px;
           scroll-margin-top: 64px;
         }
 
         h1 {
-          font-size: clamp(40px, 10.8vw, 43px);
+          font-size: clamp(42px, 12vw, 55px);
         }
 
         h2 {
-          font-size: clamp(34px, 10vw, 50px);
+          font-size: clamp(34px, 10vw, 48px);
         }
 
         .hero {
           min-height: auto;
-          padding-block: 52px 78px;
+          padding-block: 50px 74px;
           grid-template-columns: 1fr;
-          gap: 44px;
+          gap: 40px;
         }
 
         .hero-visual {
-          height: 540px;
-          min-height: 540px;
-        }
-
-        .hero-caption {
-          right: 20px;
-          bottom: 20px;
-          left: 20px;
-        }
-
-        .proof-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .proof-item {
-          min-height: auto;
-          padding: 28px 0;
-        }
-
-        .proof-item + .proof-item {
-          border-top: 1px solid var(--line);
-          border-left: 0;
-        }
-
-        .proof-item::after {
-          display: none !important;
-        }
-
-        .cycle-item {
-          grid-template-columns: 1fr;
-          gap: 8px;
-        }
-
-        .product-header {
-          margin-bottom: 36px;
-        }
-
-        .screens {
-          width: calc(100vw - 16px);
-          margin-right: -16px;
-          padding-right: 16px;
-          overflow-x: auto;
-          grid-template-columns: repeat(3, minmax(260px, 76vw));
-          gap: 16px;
-          scroll-snap-type: x mandatory;
-          scrollbar-width: none;
-        }
-
-        .screens::-webkit-scrollbar {
-          display: none;
-        }
-
-        .screen {
-          margin-top: 0 !important;
-          scroll-snap-align: start;
-        }
-
-        .capability-grid {
+          height: 560px;
           min-height: 0;
-          grid-template-columns: 1fr;
-          grid-template-rows: auto;
         }
 
-        .plan-card {
-          min-height: 0;
+        .architecture-flow li {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+
+        .interface-workbench {
+          grid-template-columns: 1fr;
+        }
+
+        .interface-tabs {
           grid-column: auto;
         }
 
-        .revision-card {
-          grid-column: auto;
+        .interface-device-area {
+          padding: 24px 18px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
         }
 
-        .capability-card {
-          min-height: 260px;
-          padding: 26px;
+        .device-frame {
+          width: min(100%, 380px);
         }
 
-        .plan-methods {
-          position: static;
-          right: 26px;
-          bottom: 26px;
-          left: 26px;
-          margin-top: 30px;
+        .screen-viewport {
+          height: min(650px, 152vw);
         }
 
+        .interface-facts,
         .trust-points {
           grid-template-columns: 1fr;
         }
 
-        .legal-link {
-          min-height: 92px;
-          padding: 20px;
+        .lab-header,
+        .lab-panel-head {
+          align-items: flex-start;
+          flex-direction: column;
         }
 
-        .cta-panel {
+        .lab-panel-head span {
+          text-align: left;
+        }
+
+        .access-panel {
           grid-template-columns: 1fr;
           align-items: start;
         }
 
-        .cta-panel .button {
+        .access-panel .button {
           width: 100%;
-        }
-
-        .site-footer {
-          margin-top: 80px;
         }
 
         .footer-grid {
@@ -1103,29 +1286,31 @@
         }
       }
 
-      @media (max-width: 420px) {
-        .hero-actions {
+      @media (max-width: 430px) {
+        .hero-actions,
+        .lab-actions {
           flex-direction: column;
+          align-items: stretch;
         }
 
-        .hero-actions .button {
+        .hero-actions .button,
+        .hero-actions .text-link,
+        .lab-actions .button,
+        .lab-reset {
           width: 100%;
+          justify-content: center;
         }
 
         .hero-visual {
-          min-height: 480px;
+          height: 500px;
         }
 
-        .hero-caption strong {
-          font-size: 20px;
-        }
-
-        .plan-methods {
+        .lab-permission-grid {
           grid-template-columns: 1fr;
         }
 
-        .plan-methods span {
-          padding-block: 10px;
+        .availability {
+          display: grid;
         }
       }
 
@@ -1150,7 +1335,7 @@
 
       @media (prefers-reduced-transparency: reduce) {
         .site-header {
-          background: #0b0d0c;
+          background: var(--bg);
           backdrop-filter: none;
           -webkit-backdrop-filter: none;
         }
@@ -1165,8 +1350,8 @@
         "@type": "SoftwareApplication",
         "name": "TrainPhase",
         "applicationCategory": "HealthApplication",
-        "operatingSystem": "WeChat Mini Program",
-        "description": "面向认真训练者与教练的专业力量训练计划系统，覆盖计划构建、编辑、大周期衔接、逐日执行、历史复盘与云同步。",
+        "operatingSystem": "Web Browser, WeChat Mini Program",
+        "description": "面向认真训练者与教练的专业力量训练计划系统，覆盖计划构建、逐日执行、历史复盘与受控 AI 助手连接。",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -1185,7 +1370,7 @@
     <header class="site-header">
       <div class="shell nav">
         <a class="brand" href="#top" aria-label="TrainPhase 首页">
-          <img src="assets/trainphase-icon.png" alt="" width="36" height="36" />
+          <img src="assets/trainphase-icon.png" alt="" width="34" height="34" />
           <span>TrainPhase</span>
         </a>
 
@@ -1199,11 +1384,11 @@
         </button>
 
         <nav class="nav-links" id="site-navigation" aria-label="主要导航">
-          <a href="#cycle">训练闭环</a>
-          <a href="#product">产品界面</a>
-          <a href="#capabilities">核心能力</a>
-          <a href="#privacy">隐私与合规</a>
-          <a class="nav-cta" href="mailto:hxiong443@gmail.com">联系项目</a>
+          <a href="#cycle">产品结构</a>
+          <a href="#product">当前界面</a>
+          <a href="#capabilities">计划能力</a>
+          <a href="#agent">Agent 连接</a>
+          <a href="#privacy">数据边界</a>
         </nav>
       </div>
     </header>
@@ -1212,17 +1397,16 @@
       <section id="top">
         <div class="shell hero">
           <div class="hero-copy reveal">
-            <p class="eyebrow">专业力量训练计划系统</p>
             <h1>
-              <span>不只记录训练。</span>
-              <span>构建整个周期。</span>
+              <span>把训练计划，</span>
+              <span>变成可执行的周期。</span>
             </h1>
             <p class="lead">
-              从计划构建、编辑、阶段衔接到逐日执行，为认真训练的人保留完整控制权。
+              组织周期、训练日和强度规则，再把完成结果带回下一次安排。
             </p>
             <div class="hero-actions">
-              <a class="button button-primary" href="#cycle">查看计划系统</a>
-              <a class="button button-secondary" href="mailto:hxiong443@gmail.com">联系项目</a>
+              <a class="button button-primary" href="#cycle">看产品怎么工作</a>
+              <a class="text-link" href="#product">浏览当前界面 <span aria-hidden="true">→</span></a>
             </div>
           </div>
 
@@ -1235,168 +1419,261 @@
               fetchpriority="high"
             />
             <figcaption class="hero-caption">
-              <strong>计划会变，逻辑不能散。</strong>
-              <img src="assets/trainphase-icon.png" alt="" width="48" height="48" />
+              <strong>计划负责方向，训练结果负责修正。</strong>
+              <img src="assets/trainphase-icon.png" alt="" width="42" height="42" />
             </figcaption>
           </figure>
         </div>
       </section>
 
-      <section class="proof" aria-label="产品概览">
-        <ol class="shell proof-grid">
-          <li class="proof-item reveal">
-            <span class="proof-value">构建计划</span>
-            <p>设定训练日、Block、动作 slot 与训练处方。</p>
-          </li>
-          <li class="proof-item reveal">
-            <span class="proof-value">继续编辑</span>
-            <p>调整周结构、强度、组次与进阶方式。</p>
-          </li>
-          <li class="proof-item reveal">
-            <span class="proof-value">衔接阶段</span>
-            <p>积累、转化、实现与过渡按结果推进。</p>
-          </li>
-          <li class="proof-item reveal">
-            <span class="proof-value">执行复盘</span>
-            <p>计划落到当日训练，再回收历史反馈。</p>
-          </li>
-        </ol>
-      </section>
-
-      <section id="cycle">
-        <div class="shell cycle-layout">
-          <div class="cycle-intro reveal">
-            <h2>你在搭的不是训练表，是训练系统。</h2>
-            <p>
-              TrainPhase 把计划从静态模板变成可构建、可编辑、可验证、可衔接并能持续执行的训练系统。
-            </p>
+      <section class="system-section" id="cycle">
+        <div class="shell">
+          <div class="section-copy reveal">
+            <h2>从计划来源到训练反馈。</h2>
+            <p>TrainPhase 的核心不是一张训练表，而是一条能继续运行的数据链。</p>
           </div>
 
-          <div class="cycle-list">
-            <article class="cycle-item reveal">
-              <strong>专业计划构建器</strong>
+          <div class="architecture reveal" aria-label="TrainPhase 产品结构">
+            <div class="architecture-intro">
+              <h3>计划进入系统后，会经历什么</h3>
               <p>
-                组织单周或多周周期，编辑 Block、训练日、动作 slot、组次、百分比或 RPE，并配置进阶、减载与测试周。
-                <em>当前已有独立构建器页面与计划验证流程。</em>
+                每一层都保留自己的职责。模板不会被训练记录改写，运行计划也不会和原始计划混在一起。
               </p>
-            </article>
-            <article class="cycle-item reveal">
-              <strong>同一套计划编辑器</strong>
-              <p>
-                自建计划可以回到原工作区继续修改周期、结构与强度。保存前会显示阻断项、提醒与计划评分，重要修改自动留档。
-                <em>已完成训练记录不会因为恢复计划版本而被覆盖。</em>
-              </p>
-            </article>
-            <article class="cycle-item reveal">
-              <strong>大周期阶段衔接</strong>
-              <p>
-                力量举路径可启用完整大周期。当前阶段结束后，系统根据 TM 与 e1RM 等结果准备转化期、实现期、过渡期或下一轮积累期。
-                <em>每次阶段推进都由训练者确认。</em>
-              </p>
-            </article>
-            <article class="cycle-item reveal">
-              <strong>专业周期工具</strong>
-              <p>
-                提供引导式定制、自建计划、DUP 调度、Nuckols 组合、5/3/1 Leader/Anchor、Peaking 与比赛倒计时等入口。
-                <em>计划完成后直接进入逐日训练与历史复盘。</em>
-              </p>
-            </article>
+            </div>
+            <ol class="architecture-flow">
+              <li>
+                <strong>选择计划来源</strong>
+                <span>经典模板、引导式定制、自建计划与专项构建器提供不同起点。</span>
+              </li>
+              <li>
+                <strong>组织周期结构</strong>
+                <span>Block、周、训练日、动作 slot、组次、百分比或 RPE 在同一结构中验证。</span>
+              </li>
+              <li>
+                <strong>生成运行实例</strong>
+                <span>激活后形成独立计划实例，并记录当前阶段、周次和训练日。</span>
+              </li>
+              <li>
+                <strong>执行当日训练</strong>
+                <span>计划处方进入训练页面，保存实际重量、次数、RPE 和完成状态。</span>
+              </li>
+              <li>
+                <strong>把结果带回计划</strong>
+                <span>历史、趋势、进阶和阶段衔接继续使用已完成训练，而不是覆盖过去。</span>
+              </li>
+            </ol>
           </div>
         </div>
       </section>
 
-      <section class="product-section" id="product">
+      <section class="interfaces-section" id="product">
         <div class="shell">
-          <div class="product-header reveal">
-            <p class="eyebrow">当前可运行界面</p>
-            <h2>真正的专业工具，不藏在概念里。</h2>
-            <p class="lead">
-              以下界面均来自项目当前版本：计划构建器、周期详情与 DUP 调度器。
-            </p>
+          <div class="section-copy reveal">
+            <h2>直接看当前版本。</h2>
+            <p>切换模块并滚动界面。下面的图片来自项目现有页面，不是概念效果图。</p>
           </div>
 
-          <div class="screens" aria-label="TrainPhase 产品界面截图">
-            <figure class="screen reveal">
-              <img
-                src="assets/product-builder.png"
-                alt="TrainPhase 专业计划构建器的周期编辑界面"
-                width="375"
-                height="812"
-                loading="lazy"
-              />
-              <figcaption>
+          <div class="interface-workbench reveal">
+            <div class="interface-tabs" role="tablist" aria-label="选择产品界面">
+              <button
+                class="interface-tab is-active"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                data-interface="library"
+              >
+                <strong>动作库</strong>
+                <span>管理训练资源</span>
+              </button>
+              <button
+                class="interface-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                data-interface="builder"
+              >
                 <strong>计划构建器</strong>
-                <span>周期、结构、强度与验证集中编辑</span>
-              </figcaption>
-            </figure>
-            <figure class="screen reveal">
-              <img
-                src="assets/product-plan.png"
-                alt="TrainPhase 训练周期计划详情界面"
-                width="375"
-                height="1545"
-                loading="lazy"
-              />
-              <figcaption>
-                <strong>计划详情</strong>
-                <span>训练规则、阶段安排与可选项清晰呈现</span>
-              </figcaption>
-            </figure>
-            <figure class="screen reveal">
-              <img
-                src="assets/product-scheduler.png"
-                alt="TrainPhase DUP 周期调度界面"
-                width="375"
-                height="1240"
-                loading="lazy"
-              />
-              <figcaption>
-                <strong>DUP 调度器</strong>
-                <span>按训练日定义强度与容量波动</span>
-              </figcaption>
-            </figure>
+                <span>组织周期</span>
+              </button>
+              <button
+                class="interface-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                data-interface="plan"
+              >
+                <strong>周期详情</strong>
+                <span>检查与激活</span>
+              </button>
+              <button
+                class="interface-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                data-interface="scheduler"
+              >
+                <strong>DUP 调度</strong>
+                <span>安排波动</span>
+              </button>
+            </div>
+
+            <div class="interface-device-area">
+              <div class="device-frame">
+                <div class="device-topbar" aria-hidden="true">
+                  <span>TrainPhase</span>
+                  <span>当前页面可滚动</span>
+                </div>
+                <div class="screen-viewport" id="screen-viewport" tabindex="0">
+                  <img
+                    id="interface-image"
+                    src="assets/product-library.png"
+                    alt="TrainPhase 动作库当前界面"
+                    width="375"
+                    height="906"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="interface-details" aria-live="polite">
+              <div>
+                <span class="interface-path" id="interface-path">训练资源</span>
+                <h3 id="interface-title">动作库</h3>
+                <p class="interface-summary" id="interface-summary">
+                  搜索和筛选训练动作，查看器械与肌群信息，为计划中的动作槽位准备可复用资源。
+                </p>
+                <div class="interface-facts" id="interface-facts">
+                  <div class="interface-fact">按名称、器械与肌群搜索</div>
+                  <div class="interface-fact">主项、变式和辅助动作分组</div>
+                  <div class="interface-fact">动作标签帮助快速筛选</div>
+                  <div class="interface-fact">可进入计划动作槽位</div>
+                </div>
+              </div>
+              <div class="interface-note">
+                <strong>在系统中的位置</strong>
+                <span id="interface-note">这是计划结构下方的训练资源层，为构建器和训练日提供动作数据。</span>
+              </div>
+            </div>
           </div>
-          <p class="screens-note">界面内容来自项目当前可运行版本，发布版本可能继续优化。</p>
         </div>
       </section>
 
-      <section id="capabilities">
-        <div class="shell">
-          <div class="capability-header reveal">
-            <h2>面向专业训练者，保留足够的控制权。</h2>
-            <p class="lead">
-              不强迫你接受黑箱计划。可以从成熟模板开始，也可以建立自己的周期化训练体系。
+      <section class="capability-section" id="capabilities">
+        <div class="shell capability-layout">
+          <div class="capability-copy reveal">
+            <h2>控制权留在训练者手里。</h2>
+            <p>
+              可以从成熟模板开始，也可以深入到周期、训练日、强度规则和阶段衔接。系统负责校验，不替你隐藏关键决定。
             </p>
           </div>
 
-          <div class="capability-grid">
-            <article class="capability-card plan-card reveal">
-              <h3>多条计划入口</h3>
-              <p>引导式定制、自建计划、经典模板与专项构建器并存，适配不同经验和控制深度。</p>
-              <div class="plan-methods" aria-label="支持的部分计划能力">
-                <span>完整大周期</span>
+          <div class="capability-groups">
+            <article class="capability-group reveal">
+              <h3>不同计划入口，共用一套运行逻辑</h3>
+              <p>经典模板、自建计划和专项构建器最后都会进入相同的验证、激活和逐日执行流程。</p>
+              <div class="capability-terms" aria-label="部分计划入口">
+                <span>引导式定制</span>
+                <span>自建计划</span>
                 <span>Nuckols 组合</span>
                 <span>Leader/Anchor</span>
                 <span>Peaking</span>
-                <span>DUP 调度</span>
+                <span>DUP</span>
               </div>
             </article>
 
-            <article class="capability-card library-card reveal">
-              <h3>计划可以继续编辑</h3>
-              <p>周期、训练日、动作 slot、组次、强度与进阶方式都能回到同一工作区调整。</p>
-              <strong>验证后保存</strong>
+            <article class="capability-group reveal">
+              <h3>计划编辑和训练历史分开保存</h3>
+              <p>修改计划不会重写已经完成的训练。历史保存实际表现，下一次处方单独保存进阶结果。</p>
             </article>
 
-            <article class="capability-card sync-card reveal">
-              <h3>计划与执行不脱节</h3>
-              <p>百分比、RPE、TM 与 1RM 等处方会进入逐日训练，完成记录继续用于进阶和阶段判断。</p>
+            <article class="capability-group reveal">
+              <h3>阶段推进需要确认</h3>
+              <p>积累、转化、实现和过渡不会静默切换。系统准备下一阶段，训练者确认后再继续。</p>
             </article>
+          </div>
+        </div>
+      </section>
 
-            <article class="capability-card revision-card reveal">
-              <h3>版本与协作有边界</h3>
-              <p>重要计划修改自动留档。开启云同步后，可在明确授权范围内与教练共享训练资料。</p>
-            </article>
+      <section class="agent-section" id="agent">
+        <div class="shell agent-layout">
+          <div class="agent-copy reveal">
+            <h2>Agent 可以建议，不能替你提交。</h2>
+            <p>
+              桌面 H5 可以连接兼容的外部 AI 助手。基础训练摘要按会话授权，敏感读取和计划写入会再次询问。
+            </p>
+            <ul class="agent-boundaries">
+              <li>聊天、模型和 API Key 留在外部 AI 助手中</li>
+              <li>关闭或刷新 H5 后，本次连接自动失效</li>
+              <li>计划写入只生成提案，确认后才同步</li>
+            </ul>
+            <details class="agent-details">
+              <summary>查看实际连接步骤</summary>
+              <ol>
+                <li>在桌面 H5 登录，进入“我的 → 外部 AI 助手”。</li>
+                <li>首次使用时安装 TrainPhase AI Bridge，并重启兼容助手。</li>
+                <li>在 Codex 或 Hermes 中发起 TrainPhase 相关请求。</li>
+                <li>回到 H5 核对助手、设备、环境和权限。</li>
+                <li>点击“允许本次连接”，敏感操作继续逐项确认。</li>
+              </ol>
+            </details>
+            <a
+              class="text-link"
+              href="https://app.trainphase.space/#/subpackages/secondary/agent-bridge/agent-bridge"
+              target="_blank"
+              rel="noopener noreferrer"
+            >进入连接设置 <span aria-hidden="true">→</span></a>
+          </div>
+
+          <div class="connection-lab reveal" id="agent-demo" data-demo-state="setup">
+            <div class="lab-header">
+              <strong>连接演示</strong>
+              <span>不安装程序，不读取真实账号</span>
+            </div>
+            <div class="lab-body" aria-live="polite">
+              <span class="lab-state" id="lab-state">本机组件</span>
+              <h3 id="lab-title">准备 TrainPhase AI Bridge</h3>
+              <p id="lab-description">
+                首次安装会检测 Windows 或 WSL 中的兼容助手，并添加 TrainPhase 连接项。
+              </p>
+
+              <div class="lab-permissions">
+                <div class="lab-panel-head">
+                  <strong>基础训练信息</strong>
+                  <span>完整档案和写入会再次询问</span>
+                </div>
+                <div class="lab-permission-grid">
+                  <span>当前计划摘要</span>
+                  <span>当前训练进度</span>
+                  <span>主项重量</span>
+                  <span>28 天趋势摘要</span>
+                </div>
+              </div>
+
+              <div class="lab-request" id="lab-request" hidden>
+                <div class="lab-panel-head">
+                  <strong>AI 助手请求连接</strong>
+                  <span>等待确认</span>
+                </div>
+                <strong>Codex</strong>
+                <p>这台电脑 / Windows / 请求基础训练信息</p>
+              </div>
+
+              <div class="lab-activity" id="lab-activity" hidden>
+                <div class="lab-panel-head">
+                  <strong>最近活动</strong>
+                  <span>刚刚</span>
+                </div>
+                <strong id="lab-activity-title">连接已建立</strong>
+                <p id="lab-activity-copy">本次连接有效，关闭或刷新 H5 后自动失效。</p>
+              </div>
+
+              <div class="lab-actions">
+                <button class="button button-primary" id="lab-primary" type="button">
+                  模拟完成安装
+                </button>
+                <button class="lab-reset" id="lab-reset" type="button">重新演示</button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1404,49 +1681,47 @@
       <section class="trust-section" id="privacy">
         <div class="shell trust-layout">
           <div class="trust-copy reveal">
-            <h2>训练数据值得被认真对待。</h2>
-            <p class="lead">
-              TrainPhase 以明确告知、主动同意和权限最小化作为首发基础。
-            </p>
+            <h2>训练数据有明确边界。</h2>
+            <p>云同步、教练协作和外部 AI 助手都建立在明确告知与主动授权之上。</p>
             <div class="trust-points">
               <div class="trust-point">
                 <strong>权限最小化</strong>
-                <p>仅申请实现当前功能所必需的权限。</p>
+                <p>只申请完成当前功能所需的权限。</p>
               </div>
               <div class="trust-point">
                 <strong>用户主动选择</strong>
-                <p>云同步与相关数据处理在启用前单独提示。</p>
+                <p>云同步与相关处理在启用前单独提示。</p>
               </div>
               <div class="trust-point">
-                <strong>健康边界清晰</strong>
-                <p>产品提供训练辅助，不替代医疗诊断或专业治疗。</p>
+                <strong>健康边界</strong>
+                <p>产品提供训练辅助，不替代医疗诊断。</p>
               </div>
               <div class="trust-point">
-                <strong>18 岁以上</strong>
-                <p>当前首发版本按成年用户使用场景设计。</p>
+                <strong>成年用户</strong>
+                <p>当前版本按 18 岁以上使用场景设计。</p>
               </div>
             </div>
           </div>
 
           <div class="legal-list reveal" aria-label="法律文件">
-            <a class="legal-link" href="privacy.html">
+            <a class="legal-link" href="legal/privacy.html">
               <span>
                 <strong>隐私政策</strong>
-                <span>了解个人信息处理、权限与用户权利</span>
+                <span>个人信息处理、权限与用户权利</span>
               </span>
               <b aria-hidden="true">→</b>
             </a>
-            <a class="legal-link" href="terms.html">
+            <a class="legal-link" href="legal/terms.html">
               <span>
                 <strong>用户协议</strong>
-                <span>了解服务范围、账号使用与责任边界</span>
+                <span>服务范围、账号使用与责任边界</span>
               </span>
               <b aria-hidden="true">→</b>
             </a>
-            <a class="legal-link" href="health.html">
+            <a class="legal-link" href="legal/health.html">
               <span>
                 <strong>健康免责声明</strong>
-                <span>了解训练风险提示与健康使用要求</span>
+                <span>训练风险提示与健康使用要求</span>
               </span>
               <b aria-hidden="true">→</b>
             </a>
@@ -1454,14 +1729,24 @@
         </div>
       </section>
 
-      <section class="final-cta">
+      <section class="access-section" id="access">
         <div class="shell">
-          <div class="cta-panel reveal">
+          <div class="access-panel reveal">
             <div>
-              <h2>把真正想练的周期，完整地跑下去。</h2>
-              <p>TrainPhase 微信小程序首发免费开放，产品发布与合作信息可通过项目邮箱联系。</p>
+              <h2>先从网页版开始。</h2>
+              <p>使用浏览器构建计划、执行训练和查看历史。iOS 与 Android 客户端入口已经预留。</p>
+              <div class="availability" aria-label="平台状态">
+                <span><strong>Web</strong> 已开放</span>
+                <span><strong>iOS</strong> 规划中</span>
+                <span><strong>Android</strong> 规划中</span>
+              </div>
             </div>
-            <a class="button button-primary" href="mailto:hxiong443@gmail.com">联系项目</a>
+            <a
+              class="button button-primary"
+              href="https://app.trainphase.space/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >进入网页版</a>
           </div>
         </div>
       </section>
@@ -1484,11 +1769,11 @@
         </div>
 
         <nav class="footer-links" aria-label="页脚导航">
-          <a href="#product">产品界面</a>
-          <a href="#capabilities">核心能力</a>
-          <a href="privacy.html">隐私政策</a>
-          <a href="terms.html">用户协议</a>
-          <a href="health.html">健康免责声明</a>
+          <a href="#product">当前界面</a>
+          <a href="#agent">Agent 连接</a>
+          <a href="legal/privacy.html">隐私政策</a>
+          <a href="legal/terms.html">用户协议</a>
+          <a href="legal/health.html">健康免责声明</a>
         </nav>
       </div>
     </footer>
@@ -1512,6 +1797,182 @@
             menuButton.textContent = "菜单";
           });
         });
+
+        const interfaces = {
+          library: {
+            image: "assets/product-library.png",
+            alt: "TrainPhase 动作库当前界面",
+            width: 375,
+            height: 906,
+            path: "训练资源",
+            title: "动作库",
+            summary: "搜索和筛选训练动作，查看器械与肌群信息，为计划中的动作槽位准备可复用资源。",
+            facts: [
+              "按名称、器械与肌群搜索",
+              "主项、变式和辅助动作分组",
+              "动作标签帮助快速筛选",
+              "可进入计划动作槽位"
+            ],
+            note: "这是计划结构下方的训练资源层，为构建器和训练日提供动作数据。"
+          },
+          builder: {
+            image: "assets/product-builder.png",
+            alt: "TrainPhase 专业计划构建器当前界面",
+            width: 375,
+            height: 812,
+            path: "周期结构",
+            title: "专业计划构建器",
+            summary: "编辑周期、训练日、动作 slot、强度处方和减载策略，并在保存前完成结构验证。",
+            facts: [
+              "单周与多周周期结构",
+              "训练日和动作 slot 编排",
+              "百分比或 RPE 处方",
+              "验证、草稿与激活分开"
+            ],
+            note: "构建器输出的是计划定义，激活后才生成独立运行实例。"
+          },
+          plan: {
+            image: "assets/product-plan.png",
+            alt: "TrainPhase 周期详情当前界面",
+            width: 375,
+            height: 1546,
+            path: "检查与激活",
+            title: "周期详情",
+            summary: "在训练开始前检查计划规则、阶段安排、每周结构和关键配置，再决定是否激活。",
+            facts: [
+              "计划规则集中呈现",
+              "周次和训练日完整展开",
+              "关键重量与强度可检查",
+              "激活前保留最终确认"
+            ],
+            note: "激活把静态计划转换成带当前周次与训练日位置的运行实例。"
+          },
+          scheduler: {
+            image: "assets/product-scheduler.png",
+            alt: "TrainPhase DUP 调度器当前界面",
+            width: 407,
+            height: 1236,
+            path: "负荷波动",
+            title: "DUP 调度器",
+            summary: "按训练日定义容量与强度波动，让每个训练日承担不同刺激，而不是重复同一处方。",
+            facts: [
+              "训练日角色单独配置",
+              "强度与容量按日波动",
+              "自动检查调度冲突",
+              "生成结果进入统一计划流程"
+            ],
+            note: "专项构建器不会绕过验证，结果仍进入相同的计划运行链。"
+          }
+        };
+
+        const interfaceTabs = Array.from(document.querySelectorAll("[data-interface]"));
+        const interfaceImage = document.getElementById("interface-image");
+        const interfacePath = document.getElementById("interface-path");
+        const interfaceTitle = document.getElementById("interface-title");
+        const interfaceSummary = document.getElementById("interface-summary");
+        const interfaceFacts = document.getElementById("interface-facts");
+        const interfaceNote = document.getElementById("interface-note");
+        const screenViewport = document.getElementById("screen-viewport");
+
+        const renderInterface = (id) => {
+          const item = interfaces[id];
+          if (!item) return;
+
+          interfaceImage.src = item.image;
+          interfaceImage.alt = item.alt;
+          interfaceImage.width = item.width;
+          interfaceImage.height = item.height;
+          interfacePath.textContent = item.path;
+          interfaceTitle.textContent = item.title;
+          interfaceSummary.textContent = item.summary;
+          interfaceNote.textContent = item.note;
+          interfaceFacts.replaceChildren(
+            ...item.facts.map((fact) => {
+              const element = document.createElement("div");
+              element.className = "interface-fact";
+              element.textContent = fact;
+              return element;
+            })
+          );
+          screenViewport.scrollTop = 0;
+
+          interfaceTabs.forEach((tab) => {
+            const active = tab.dataset.interface === id;
+            tab.classList.toggle("is-active", active);
+            tab.setAttribute("aria-selected", String(active));
+          });
+        };
+
+        interfaceTabs.forEach((tab) => {
+          tab.addEventListener("click", () => renderInterface(tab.dataset.interface));
+        });
+
+        const labStates = [
+          {
+            id: "setup",
+            state: "本机组件",
+            title: "准备 TrainPhase AI Bridge",
+            description: "首次安装会检测 Windows 或 WSL 中的兼容助手，并添加 TrainPhase 连接项。",
+            button: "模拟完成安装"
+          },
+          {
+            id: "waiting",
+            state: "等待助手",
+            title: "在外部 AI 助手中发起请求",
+            description: "告诉 Codex 或 Hermes 使用 TrainPhase。请求会回到桌面 H5 等待确认。",
+            button: "模拟 Agent 请求"
+          },
+          {
+            id: "request",
+            state: "等待确认",
+            title: "核对助手和权限",
+            description: "名称、设备、环境和基础权限都需要在本次连接前确认。",
+            button: "允许本次连接",
+            request: true
+          },
+          {
+            id: "connected",
+            state: "本次连接有效",
+            title: "基础训练信息已提供",
+            description: "完整历史、敏感档案和计划写入仍需新的明确授权。",
+            button: "结束演示",
+            activity: true
+          }
+        ];
+
+        const lab = document.getElementById("agent-demo");
+        const labState = document.getElementById("lab-state");
+        const labTitle = document.getElementById("lab-title");
+        const labDescription = document.getElementById("lab-description");
+        const labRequest = document.getElementById("lab-request");
+        const labActivity = document.getElementById("lab-activity");
+        const labPrimary = document.getElementById("lab-primary");
+        const labReset = document.getElementById("lab-reset");
+        let labIndex = 0;
+
+        const renderLab = () => {
+          const current = labStates[labIndex];
+          lab.dataset.demoState = current.id;
+          labState.textContent = current.state;
+          labTitle.textContent = current.title;
+          labDescription.textContent = current.description;
+          labPrimary.textContent = current.button;
+          labRequest.hidden = !current.request;
+          labActivity.hidden = !current.activity;
+        };
+
+        labPrimary.addEventListener("click", () => {
+          labIndex = labIndex === labStates.length - 1 ? 0 : labIndex + 1;
+          renderLab();
+        });
+
+        labReset.addEventListener("click", () => {
+          labIndex = 0;
+          renderLab();
+          labPrimary.focus();
+        });
+
+        renderLab();
 
         const revealItems = document.querySelectorAll(".reveal");
         if ("IntersectionObserver" in window) {
