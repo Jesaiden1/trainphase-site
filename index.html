@@ -5,1630 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta
       name="description"
-      content="TrainPhase 是面向认真训练者与教练的专业力量训练计划系统，支持计划构建、逐日执行、历史复盘，以及受控连接外部 AI 助手。"
+      content="TrainPhase 是面向认真训练者与教练的专业力量训练计划系统，支持计划编辑、逐日执行、动作历史统计与复盘，以及受控连接外部 AI 助手。"
     />
-    <meta name="theme-color" content="#0b0e0c" />
+    <meta name="theme-color" content="#0a0b09" />
     <meta name="color-scheme" content="dark" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="zh_CN" />
     <meta property="og:title" content="TrainPhase | 专业力量训练计划系统" />
-    <meta
-      property="og:description"
-      content="从计划来源、周期结构和训练执行，到历史反馈与下一阶段。"
-    />
-    <meta property="og:image" content="assets/trainphase-training-hero.webp" />
+    <meta property="og:description" content="从计划编辑、逐日执行到动作统计与下一阶段。" />
+    <meta property="og:image" content="assets/og-trainphase.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://trainphase.space/" />
     <title>TrainPhase | 专业力量训练计划系统</title>
     <link rel="icon" type="image/png" href="assets/trainphase-icon.png" />
-    <link rel="preload" as="image" href="assets/trainphase-training-hero.webp" type="image/webp" />
-    <style>
-      :root {
-        color-scheme: dark;
-        --bg: #0b0e0c;
-        --surface: #121612;
-        --surface-2: #171c18;
-        --surface-3: #1d231e;
-        --text: #f2f3ee;
-        --muted: #a4aba2;
-        --faint: #747d74;
-        --line: #2a312b;
-        --line-strong: #39423a;
-        --accent: #f47a22;
-        --accent-hover: #ff8b38;
-        --accent-soft: rgba(244, 122, 34, 0.11);
-        --accent-ink: #17110c;
-        --danger: #e66a64;
-        --max-width: 1280px;
-        --radius: 14px;
-        --radius-small: 10px;
-        --shadow: 0 28px 72px rgba(2, 5, 3, 0.34);
-        --display: "Bahnschrift", "DIN Alternate", "Arial Narrow", "PingFang SC",
-          "Microsoft YaHei", sans-serif;
-        --body: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui,
-          sans-serif;
-      }
-
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-        background: var(--bg);
-      }
-
-      body {
-        margin: 0;
-        min-width: 320px;
-        overflow-x: hidden;
-        background: var(--bg);
-        color: var(--text);
-        font-family: var(--body);
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
-      }
-
-      img {
-        display: block;
-        max-width: 100%;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      button,
-      a {
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      button {
-        font: inherit;
-      }
-
-      :focus-visible {
-        outline: 3px solid rgba(244, 122, 34, 0.78);
-        outline-offset: 4px;
-      }
-
-      .skip-link {
-        position: fixed;
-        top: 12px;
-        left: 12px;
-        z-index: 100;
-        padding: 10px 14px;
-        transform: translateY(-160%);
-        border-radius: var(--radius-small);
-        background: var(--accent);
-        color: var(--accent-ink);
-        font-weight: 800;
-        transition: transform 180ms ease;
-      }
-
-      .skip-link:focus {
-        transform: translateY(0);
-      }
-
-      .shell {
-        width: min(calc(100% - 48px), var(--max-width));
-        margin-inline: auto;
-      }
-
-      .site-header {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        height: 68px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-        background: rgba(11, 14, 12, 0.92);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-      }
-
-      .nav {
-        display: flex;
-        height: 100%;
-        align-items: center;
-        justify-content: space-between;
-        gap: 32px;
-      }
-
-      .brand {
-        display: inline-flex;
-        min-width: max-content;
-        align-items: center;
-        gap: 11px;
-        font-family: var(--display);
-        font-size: 19px;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-      }
-
-      .brand img {
-        width: 34px;
-        height: 34px;
-        border: 1px solid rgba(255, 255, 255, 0.09);
-        border-radius: var(--radius-small);
-      }
-
-      .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 26px;
-        color: #c6cbc4;
-        font-size: 14px;
-        font-weight: 650;
-      }
-
-      .nav-links a {
-        white-space: nowrap;
-        transition:
-          color 180ms ease,
-          transform 180ms ease;
-      }
-
-      .nav-links a:hover {
-        color: var(--text);
-        transform: translateY(-1px);
-      }
-
-      .menu-button {
-        display: none;
-        min-width: 58px;
-        min-height: 42px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius-small);
-        background: var(--surface);
-        color: var(--text);
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 750;
-      }
-
-      main {
-        display: block;
-      }
-
-      section {
-        position: relative;
-        padding-block: 104px;
-        scroll-margin-top: 68px;
-      }
-
-      h1,
-      h2,
-      h3,
-      p {
-        margin-top: 0;
-      }
-
-      h1,
-      h2,
-      h3 {
-        font-family: var(--display);
-      }
-
-      h1 {
-        max-width: 700px;
-        margin-bottom: 24px;
-        font-size: clamp(48px, 5.4vw, 76px);
-        font-weight: 800;
-        letter-spacing: -0.052em;
-        line-height: 0.98;
-      }
-
-      h1 span {
-        display: block;
-      }
-
-      h2 {
-        max-width: 780px;
-        margin-bottom: 20px;
-        font-size: clamp(38px, 4.4vw, 62px);
-        font-weight: 800;
-        letter-spacing: -0.044em;
-        line-height: 1.02;
-      }
-
-      h3 {
-        margin-bottom: 10px;
-        font-size: 23px;
-        letter-spacing: -0.025em;
-        line-height: 1.2;
-      }
-
-      .lead {
-        max-width: 650px;
-        color: #bdc3bb;
-        font-size: clamp(17px, 1.7vw, 20px);
-        line-height: 1.72;
-      }
-
-      .section-copy {
-        max-width: 760px;
-        margin-bottom: 44px;
-      }
-
-      .section-copy p {
-        max-width: 640px;
-        margin-bottom: 0;
-        color: var(--muted);
-        font-size: 17px;
-      }
-
-      .button {
-        display: inline-flex;
-        min-height: 48px;
-        padding: 0 20px;
-        border: 1px solid transparent;
-        border-radius: var(--radius-small);
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-weight: 800;
-        line-height: 1;
-        white-space: nowrap;
-        transition:
-          transform 180ms ease,
-          background-color 180ms ease,
-          border-color 180ms ease,
-          color 180ms ease;
-      }
-
-      .button-primary {
-        background: var(--accent);
-        color: var(--accent-ink);
-      }
-
-      .button-primary:hover {
-        background: var(--accent-hover);
-        transform: translateY(-2px);
-      }
-
-      .button-secondary {
-        border-color: var(--line-strong);
-        background: var(--surface);
-        color: var(--text);
-      }
-
-      .button-secondary:hover {
-        border-color: #626c63;
-        background: var(--surface-2);
-        transform: translateY(-2px);
-      }
-
-      .button:active {
-        transform: translateY(1px) scale(0.985);
-      }
-
-      .text-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: #d6dbd4;
-        font-size: 14px;
-        font-weight: 750;
-      }
-
-      .text-link:hover {
-        color: var(--accent);
-      }
-
-      .hero {
-        display: grid;
-        min-height: calc(100dvh - 68px);
-        padding-block: 48px;
-        grid-template-columns: minmax(0, 1.05fr) minmax(380px, 0.95fr);
-        align-items: center;
-        gap: clamp(48px, 7vw, 100px);
-      }
-
-      .hero-copy .lead {
-        max-width: 590px;
-        margin-bottom: 30px;
-      }
-
-      .hero-actions {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 20px;
-      }
-
-      .hero-visual {
-        position: relative;
-        width: 100%;
-        height: min(72dvh, 720px);
-        min-height: 520px;
-        margin: 0;
-        overflow: hidden;
-        border-radius: var(--radius);
-        background: var(--surface);
-        box-shadow: var(--shadow);
-      }
-
-      .hero-visual::after {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgba(5, 8, 6, 0.74), transparent 48%);
-        content: "";
-        pointer-events: none;
-      }
-
-      .hero-visual > img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center 36%;
-      }
-
-      .hero-caption {
-        position: absolute;
-        right: 24px;
-        bottom: 22px;
-        left: 24px;
-        z-index: 1;
-        display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 20px;
-      }
-
-      .hero-caption strong {
-        max-width: 360px;
-        font-family: var(--display);
-        font-size: clamp(22px, 2.8vw, 34px);
-        letter-spacing: -0.035em;
-        line-height: 1.08;
-      }
-
-      .hero-caption img {
-        width: 42px;
-        height: 42px;
-        border-radius: var(--radius-small);
-      }
-
-      .system-section {
-        border-top: 1px solid var(--line);
-        background: #0e120f;
-      }
-
-      .architecture {
-        display: grid;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: var(--surface);
-        grid-template-columns: 0.78fr 1.22fr;
-        overflow: hidden;
-      }
-
-      .architecture-intro {
-        padding: clamp(30px, 5vw, 58px);
-        border-right: 1px solid var(--line);
-        background:
-          linear-gradient(145deg, rgba(244, 122, 34, 0.13), transparent 50%),
-          #141915;
-      }
-
-      .architecture-intro h3 {
-        max-width: 380px;
-        margin-bottom: 18px;
-        font-size: clamp(30px, 4vw, 50px);
-      }
-
-      .architecture-intro p {
-        max-width: 450px;
-        margin-bottom: 0;
-        color: var(--muted);
-      }
-
-      .architecture-flow {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-
-      .architecture-flow li {
-        display: grid;
-        min-height: 112px;
-        padding: 24px 30px;
-        grid-template-columns: minmax(150px, 0.45fr) minmax(0, 1fr);
-        align-items: center;
-        gap: 28px;
-      }
-
-      .architecture-flow li + li {
-        border-top: 1px solid var(--line);
-      }
-
-      .architecture-flow strong {
-        font-family: var(--display);
-        font-size: 20px;
-      }
-
-      .architecture-flow span {
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .architecture-flow li:last-child {
-        background: var(--accent-soft);
-      }
-
-      .architecture-flow li:last-child strong {
-        color: #ffc394;
-      }
-
-      .interfaces-section {
-        background: var(--bg);
-      }
-
-      .interface-workbench {
-        display: grid;
-        min-height: 760px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: #0f130f;
-        grid-template-columns: 230px minmax(340px, 430px) minmax(280px, 1fr);
-        overflow: hidden;
-        box-shadow: var(--shadow);
-      }
-
-      .interface-tabs {
-        display: flex;
-        padding: 18px;
-        border-right: 1px solid var(--line);
-        flex-direction: column;
-        gap: 8px;
-        background: #0c100d;
-      }
-
-      .interface-tab {
-        display: grid;
-        min-height: 76px;
-        padding: 14px;
-        border: 1px solid transparent;
-        border-radius: var(--radius-small);
-        background: transparent;
-        color: var(--muted);
-        cursor: pointer;
-        text-align: left;
-        transition:
-          background-color 180ms ease,
-          border-color 180ms ease,
-          color 180ms ease,
-          transform 180ms ease;
-      }
-
-      .interface-tab:hover {
-        background: var(--surface);
-        color: var(--text);
-        transform: translateX(2px);
-      }
-
-      .interface-tab.is-active {
-        border-color: rgba(244, 122, 34, 0.42);
-        background: var(--accent-soft);
-        color: var(--text);
-      }
-
-      .interface-tab strong,
-      .interface-tab span {
-        display: block;
-      }
-
-      .interface-tab strong {
-        font-family: var(--display);
-        font-size: 17px;
-      }
-
-      .interface-tab span {
-        margin-top: 3px;
-        color: var(--faint);
-        font-size: 12px;
-      }
-
-      .interface-device-area {
-        display: grid;
-        padding: 28px 24px;
-        border-right: 1px solid var(--line);
-        place-items: center;
-        background:
-          linear-gradient(180deg, rgba(244, 122, 34, 0.04), transparent 36%),
-          #111511;
-      }
-
-      .device-frame {
-        width: min(100%, 382px);
-        padding: 9px;
-        overflow: hidden;
-        border: 1px solid #333b34;
-        border-radius: 24px;
-        background: #080b09;
-        box-shadow: 0 24px 54px rgba(1, 3, 2, 0.42);
-      }
-
-      .device-topbar {
-        display: flex;
-        height: 28px;
-        padding: 0 10px;
-        align-items: center;
-        justify-content: space-between;
-        color: var(--faint);
-        font-size: 10px;
-      }
-
-      .device-topbar span:last-child {
-        color: #b9c0b8;
-      }
-
-      .screen-viewport {
-        height: 650px;
-        overflow-y: auto;
-        border-radius: 16px;
-        background: #0d110e;
-        scrollbar-color: #4a534b #141915;
-        scrollbar-width: thin;
-      }
-
-      .screen-viewport img {
-        width: 100%;
-        height: auto;
-      }
-
-      .interface-details {
-        display: flex;
-        padding: clamp(30px, 4vw, 48px);
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 38px;
-      }
-
-      .interface-path {
-        display: block;
-        margin-bottom: 16px;
-        color: var(--accent);
-        font-size: 12px;
-        font-weight: 800;
-      }
-
-      .interface-details h3 {
-        margin-bottom: 16px;
-        font-size: clamp(30px, 3.4vw, 46px);
-      }
-
-      .interface-summary {
-        max-width: 430px;
-        color: var(--muted);
-        font-size: 16px;
-      }
-
-      .interface-facts {
-        display: grid;
-        margin-top: 32px;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-
-      .interface-fact {
-        min-height: 90px;
-        padding: 14px;
-        border-radius: var(--radius-small);
-        background: var(--surface-2);
-        color: #c8cec7;
-        font-size: 13px;
-      }
-
-      .interface-note {
-        padding-top: 22px;
-        border-top: 1px solid var(--line);
-        color: var(--faint);
-        font-size: 13px;
-      }
-
-      .interface-note strong {
-        display: block;
-        margin-bottom: 5px;
-        color: var(--text);
-        font-family: var(--display);
-        font-size: 16px;
-      }
-
-      .capability-section {
-        border-top: 1px solid var(--line);
-        background: #0e120f;
-      }
-
-      .capability-layout {
-        display: grid;
-        grid-template-columns: minmax(300px, 0.7fr) minmax(0, 1.3fr);
-        align-items: start;
-        gap: clamp(46px, 8vw, 110px);
-      }
-
-      .capability-copy {
-        position: sticky;
-        top: 108px;
-      }
-
-      .capability-copy p {
-        max-width: 480px;
-        color: var(--muted);
-      }
-
-      .capability-groups {
-        display: grid;
-        gap: 34px;
-      }
-
-      .capability-group {
-        padding-bottom: 34px;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .capability-group:last-child {
-        padding-bottom: 0;
-        border-bottom: 0;
-      }
-
-      .capability-group h3 {
-        margin-bottom: 14px;
-      }
-
-      .capability-group p {
-        max-width: 680px;
-        margin-bottom: 18px;
-        color: var(--muted);
-      }
-
-      .capability-terms {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-
-      .capability-terms span {
-        padding: 8px 10px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius-small);
-        color: #c9cec7;
-        font-size: 12px;
-      }
-
-      .agent-section {
-        border-top: 1px solid var(--line);
-        background: var(--bg);
-      }
-
-      .agent-layout {
-        display: grid;
-        grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr);
-        align-items: start;
-        gap: clamp(44px, 8vw, 110px);
-      }
-
-      .agent-copy h2 {
-        max-width: 560px;
-      }
-
-      .agent-copy > p {
-        max-width: 520px;
-        color: var(--muted);
-      }
-
-      .agent-features {
-        margin: 30px 0;
-      }
-
-      .agent-feature {
-        padding: 16px 0;
-        border-top: 1px solid var(--line);
-      }
-
-      .agent-feature strong,
-      .agent-feature span {
-        display: block;
-      }
-
-      .agent-feature strong {
-        margin-bottom: 4px;
-        font-family: var(--display);
-        font-size: 17px;
-      }
-
-      .agent-feature span {
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .agent-cta-row {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 12px 20px;
-      }
-
-      .agent-setup {
-        margin-top: clamp(64px, 9vw, 104px);
-        padding-top: clamp(42px, 6vw, 64px);
-        border-top: 1px solid var(--line);
-      }
-
-      .agent-setup-heading {
-        max-width: 680px;
-      }
-
-      .agent-setup-heading h3 {
-        margin-bottom: 12px;
-        font-size: clamp(30px, 4vw, 46px);
-      }
-
-      .agent-setup-heading p {
-        margin-bottom: 0;
-        color: var(--muted);
-      }
-
-      .agent-setup-grid {
-        display: grid;
-        margin-top: 34px;
-        grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1.18fr);
-        align-items: start;
-        gap: clamp(44px, 7vw, 88px);
-      }
-
-      .connection-flow {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        counter-reset: agent-flow;
-      }
-
-      .connection-flow li {
-        position: relative;
-        min-height: 96px;
-        padding: 18px 0 18px 44px;
-        border-top: 1px solid var(--line);
-        counter-increment: agent-flow;
-      }
-
-      .connection-flow li::before {
-        position: absolute;
-        top: 19px;
-        left: 0;
-        color: var(--accent);
-        content: counter(agent-flow, decimal-leading-zero);
-        font-family: var(--display);
-        font-size: 14px;
-        font-weight: 800;
-      }
-
-      .connection-flow strong,
-      .connection-flow span {
-        display: block;
-      }
-
-      .connection-flow strong {
-        margin-bottom: 5px;
-        font-family: var(--display);
-        font-size: 17px;
-      }
-
-      .connection-flow span {
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .agent-client-panel {
-        min-width: 0;
-        padding: clamp(24px, 4vw, 36px);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: var(--surface);
-      }
-
-      .agent-client-panel h3 {
-        margin-bottom: 8px;
-        font-size: clamp(24px, 3vw, 32px);
-      }
-
-      .agent-client-panel > p {
-        margin-bottom: 20px;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .client-group-label {
-        display: block;
-        margin: 18px 0 9px;
-        font-family: var(--display);
-        font-size: 14px;
-      }
-
-      .client-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-
-      .client-tags span {
-        padding: 8px 10px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius-small);
-        color: #cbd0c8;
-        font-size: 12px;
-      }
-
-      .client-note {
-        margin: 16px 0 0;
-        color: var(--faint);
-        font-size: 12px;
-      }
-
-      .agent-configs {
-        min-width: 0;
-        margin-top: 26px;
-        border-top: 1px solid var(--line);
-      }
-
-      .client-config {
-        min-width: 0;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .client-config summary {
-        display: flex;
-        min-height: 70px;
-        padding: 16px 0;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-        color: var(--text);
-        cursor: pointer;
-        list-style: none;
-      }
-
-      .client-config summary::-webkit-details-marker {
-        display: none;
-      }
-
-      .client-config summary::after {
-        flex: 0 0 auto;
-        color: var(--accent);
-        content: "+";
-        font-family: var(--display);
-        font-size: 22px;
-        line-height: 1;
-      }
-
-      .client-config[open] summary::after {
-        content: "-";
-      }
-
-      .config-summary-copy strong,
-      .config-summary-copy span {
-        display: block;
-      }
-
-      .config-summary-copy strong {
-        font-family: var(--display);
-        font-size: 17px;
-      }
-
-      .config-summary-copy span {
-        margin-top: 3px;
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .config-content {
-        min-width: 0;
-        padding: 0 0 22px;
-      }
-
-      .config-content > p {
-        margin-bottom: 12px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .code-shell {
-        min-width: 0;
-        overflow: hidden;
-        border: 1px solid #323a33;
-        border-radius: var(--radius-small);
-        background: #090c0a;
-      }
-
-      .code-toolbar {
-        display: flex;
-        min-height: 42px;
-        padding: 8px 10px 8px 14px;
-        border-bottom: 1px solid #2a312b;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-        color: var(--faint);
-        font-size: 11px;
-      }
-
-      .copy-config {
-        min-width: 58px;
-        min-height: 30px;
-        padding: 0 10px;
-        border: 1px solid var(--line-strong);
-        border-radius: 8px;
-        background: var(--surface-2);
-        color: var(--text);
-        cursor: pointer;
-        font-size: 12px;
-        font-weight: 750;
-      }
-
-      .copy-config:hover {
-        border-color: rgba(244, 122, 34, 0.58);
-        background: var(--accent-soft);
-      }
-
-      .copy-config:active {
-        transform: translateY(1px);
-      }
-
-      .code-shell pre {
-        margin: 0;
-        padding: 16px;
-        overflow-x: auto;
-        color: #d9ddd6;
-        font-family: Consolas, "SFMono-Regular", monospace;
-        font-size: 11px;
-        line-height: 1.65;
-        tab-size: 2;
-      }
-
-      .config-footnote {
-        margin: 10px 0 0;
-        color: var(--faint);
-        font-size: 12px;
-      }
-
-      .agent-help {
-        margin-top: 20px;
-      }
-
-      .agent-help summary {
-        color: var(--text);
-        cursor: pointer;
-        font-weight: 750;
-      }
-
-      .agent-help ul {
-        margin: 12px 0 0;
-        padding-left: 20px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .agent-help li + li {
-        margin-top: 7px;
-      }
-      .connection-lab {
-        overflow: hidden;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: var(--surface);
-        box-shadow: var(--shadow);
-      }
-
-      .lab-header {
-        display: flex;
-        min-height: 54px;
-        padding: 14px 18px;
-        border-bottom: 1px solid var(--line);
-        align-items: center;
-        justify-content: space-between;
-        gap: 18px;
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .lab-header strong {
-        color: #f1b98e;
-      }
-
-      .lab-body {
-        padding: clamp(26px, 4vw, 42px);
-      }
-
-      .lab-state {
-        display: inline-flex;
-        margin-bottom: 15px;
-        padding: 7px 10px;
-        border: 1px solid rgba(244, 122, 34, 0.35);
-        border-radius: var(--radius-small);
-        background: var(--accent-soft);
-        color: #f5bd91;
-        font-size: 12px;
-        font-weight: 800;
-      }
-
-      .lab-body h3 {
-        font-size: clamp(28px, 3.6vw, 44px);
-      }
-
-      .lab-body > p {
-        max-width: 590px;
-        color: var(--muted);
-      }
-
-      .lab-permissions,
-      .lab-request,
-      .lab-activity {
-        margin-top: 26px;
-        padding: 18px;
-        border: 1px solid #303831;
-        border-radius: var(--radius-small);
-        background: #0e120f;
-      }
-
-      .lab-panel-head {
-        display: flex;
-        margin-bottom: 14px;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 18px;
-      }
-
-      .lab-panel-head strong {
-        font-family: var(--display);
-        font-size: 17px;
-      }
-
-      .lab-panel-head span {
-        color: var(--faint);
-        font-size: 12px;
-        text-align: right;
-      }
-
-      .lab-permission-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
-
-      .lab-permission-grid span {
-        padding: 10px 12px;
-        border-radius: 8px;
-        background: var(--surface-2);
-        color: #c8cec7;
-        font-size: 13px;
-      }
-
-      .lab-request strong,
-      .lab-activity strong {
-        display: block;
-        margin-bottom: 4px;
-        font-family: var(--display);
-        font-size: 18px;
-      }
-
-      .lab-request p,
-      .lab-activity p {
-        margin-bottom: 0;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .lab-actions {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 26px;
-        gap: 10px;
-      }
-
-      .lab-reset {
-        min-height: 48px;
-        padding: 0 16px;
-        border: 0;
-        background: transparent;
-        color: var(--muted);
-        cursor: pointer;
-        font-weight: 750;
-      }
-
-      .lab-reset:hover {
-        color: var(--text);
-      }
-
-      .trust-section {
-        border-top: 1px solid var(--line);
-        background: #0e120f;
-      }
-
-      .trust-layout {
-        display: grid;
-        grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.2fr);
-        align-items: start;
-        gap: clamp(46px, 8vw, 110px);
-      }
-
-      .trust-copy p {
-        max-width: 500px;
-        color: var(--muted);
-      }
-
-      .trust-points {
-        display: grid;
-        margin-top: 30px;
-        grid-template-columns: 1fr 1fr;
-        gap: 22px;
-      }
-
-      .trust-point {
-        padding-top: 16px;
-        border-top: 1px solid var(--line);
-      }
-
-      .trust-point strong {
-        display: block;
-        margin-bottom: 6px;
-        font-family: var(--display);
-        font-size: 17px;
-      }
-
-      .trust-point p {
-        margin-bottom: 0;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .legal-list {
-        overflow: hidden;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: var(--surface);
-      }
-
-      .legal-link {
-        display: grid;
-        min-height: 106px;
-        padding: 24px 26px;
-        grid-template-columns: 1fr auto;
-        align-items: center;
-        gap: 24px;
-        transition: background-color 180ms ease;
-      }
-
-      .legal-link + .legal-link {
-        border-top: 1px solid var(--line);
-      }
-
-      .legal-link:hover {
-        background: var(--surface-2);
-      }
-
-      .legal-link strong,
-      .legal-link span {
-        display: block;
-      }
-
-      .legal-link strong {
-        margin-bottom: 4px;
-        font-family: var(--display);
-        font-size: 19px;
-      }
-
-      .legal-link span {
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .legal-link b {
-        color: var(--accent);
-        font-size: 22px;
-      }
-
-      .access-section {
-        padding-block: 72px 36px;
-        background: var(--bg);
-      }
-
-      .access-panel {
-        display: grid;
-        padding: clamp(32px, 5vw, 62px);
-        border: 1px solid rgba(244, 122, 34, 0.32);
-        border-radius: var(--radius);
-        background:
-          linear-gradient(145deg, rgba(244, 122, 34, 0.13), transparent 55%),
-          var(--surface);
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: end;
-        gap: 44px;
-      }
-
-      .access-panel h2 {
-        margin-bottom: 14px;
-      }
-
-      .access-panel p {
-        max-width: 620px;
-        margin-bottom: 0;
-        color: var(--muted);
-      }
-
-      .availability {
-        display: flex;
-        margin-top: 24px;
-        flex-wrap: wrap;
-        gap: 10px 18px;
-        color: var(--faint);
-        font-size: 13px;
-      }
-
-      .availability strong {
-        color: #d7dcd5;
-        font-weight: 700;
-      }
-
-      .site-footer {
-        margin-top: 74px;
-        padding-block: 42px;
-        border-top: 1px solid var(--line);
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .footer-grid {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 40px;
-      }
-
-      .footer-brand {
-        display: flex;
-        margin-bottom: 18px;
-        align-items: center;
-        gap: 11px;
-        color: var(--text);
-        font-family: var(--display);
-        font-size: 18px;
-        font-weight: 800;
-      }
-
-      .footer-brand img {
-        width: 32px;
-        height: 32px;
-        border-radius: 9px;
-      }
-
-      .contact-lines {
-        display: grid;
-        max-width: 680px;
-        gap: 5px;
-      }
-
-      .contact-lines a:hover,
-      .footer-links a:hover {
-        color: var(--text);
-      }
-
-      .footer-links {
-        display: flex;
-        flex-wrap: wrap;
-        align-content: flex-start;
-        justify-content: flex-end;
-        gap: 12px 22px;
-      }
-
-      .copyright {
-        margin: 24px 0 0;
-        color: var(--faint);
-      }
-
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-
-      .js .reveal {
-        opacity: 0;
-        transform: translateY(18px);
-        transition:
-          opacity 640ms cubic-bezier(0.16, 1, 0.3, 1),
-          transform 640ms cubic-bezier(0.16, 1, 0.3, 1);
-      }
-
-      .js .reveal.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      @media (max-width: 1080px) {
-        .nav-links {
-          gap: 18px;
-        }
-
-        .interface-workbench {
-          grid-template-columns: 190px minmax(320px, 390px) minmax(260px, 1fr);
-        }
-
-        .interface-details {
-          padding: 30px;
-        }
-      }
-
-      @media (max-width: 940px) {
-        .hero {
-          grid-template-columns: 1fr 0.86fr;
-          gap: 38px;
-        }
-
-        .hero-visual {
-          min-height: 480px;
-        }
-
-        .architecture,
-        .capability-layout,
-        .agent-layout,
-        .agent-setup-grid,
-        .trust-layout {
-          grid-template-columns: 1fr;
-        }
-
-        .architecture-intro {
-          border-right: 0;
-          border-bottom: 1px solid var(--line);
-        }
-
-        .capability-copy {
-          position: static;
-        }
-
-        .interface-workbench {
-          min-height: 0;
-          grid-template-columns: 220px minmax(340px, 0.9fr) minmax(260px, 1.1fr);
-        }
-
-        .screen-viewport {
-          height: 590px;
-        }
-      }
-
-      @media (max-width: 820px) {
-        .nav-links {
-          gap: 14px;
-          font-size: 13px;
-        }
-
-        .interface-workbench {
-          grid-template-columns: minmax(320px, 0.9fr) minmax(280px, 1.1fr);
-        }
-
-        .interface-tabs {
-          grid-column: 1 / -1;
-          display: grid;
-          overflow-x: auto;
-          border-right: 0;
-          border-bottom: 1px solid var(--line);
-          grid-template-columns: repeat(4, minmax(150px, 1fr));
-          scrollbar-width: none;
-        }
-
-        .interface-tabs::-webkit-scrollbar {
-          display: none;
-        }
-
-        .interface-device-area {
-          border-right: 1px solid var(--line);
-        }
-      }
-
-      @media (max-width: 720px) {
-        .shell {
-          width: min(calc(100% - 32px), var(--max-width));
-        }
-
-        .site-header {
-          height: 64px;
-        }
-
-        .menu-button {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .nav-links {
-          position: absolute;
-          top: 64px;
-          right: 16px;
-          left: 16px;
-          display: none;
-          padding: 12px;
-          border: 1px solid var(--line);
-          border-radius: var(--radius);
-          background: #111511;
-          box-shadow: var(--shadow);
-          flex-direction: column;
-          align-items: stretch;
-          gap: 4px;
-        }
-
-        .nav-links.is-open {
-          display: flex;
-        }
-
-        .nav-links a {
-          padding: 11px 13px;
-          border-radius: var(--radius-small);
-        }
-
-        section {
-          padding-block: 78px;
-          scroll-margin-top: 64px;
-        }
-
-        h1 {
-          font-size: clamp(42px, 12vw, 55px);
-        }
-
-        h2 {
-          font-size: clamp(34px, 10vw, 48px);
-        }
-
-        .hero {
-          min-height: auto;
-          padding-block: 50px 74px;
-          grid-template-columns: 1fr;
-          gap: 40px;
-        }
-
-        .hero-visual {
-          height: 560px;
-          min-height: 0;
-        }
-
-        .architecture-flow li {
-          grid-template-columns: 1fr;
-          gap: 6px;
-        }
-
-        .interface-workbench {
-          grid-template-columns: 1fr;
-        }
-
-        .interface-tabs {
-          grid-column: auto;
-        }
-
-        .interface-device-area {
-          padding: 24px 18px;
-          border-right: 0;
-          border-bottom: 1px solid var(--line);
-        }
-
-        .device-frame {
-          width: min(100%, 380px);
-        }
-
-        .screen-viewport {
-          height: min(650px, 152vw);
-        }
-
-        .interface-facts,
-        .trust-points {
-          grid-template-columns: 1fr;
-        }
-
-        .connection-flow li {
-          min-height: 0;
-        }
-
-        .agent-client-panel {
-          padding: 22px;
-        }
-
-        .lab-header,
-        .lab-panel-head {
-          align-items: flex-start;
-          flex-direction: column;
-        }
-
-        .lab-panel-head span {
-          text-align: left;
-        }
-
-        .access-panel {
-          grid-template-columns: 1fr;
-          align-items: start;
-        }
-
-        .access-panel .button {
-          width: 100%;
-        }
-
-        .footer-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .footer-links {
-          justify-content: flex-start;
-        }
-      }
-
-      @media (max-width: 430px) {
-        .hero-actions,
-        .agent-cta-row,
-        .lab-actions {
-          flex-direction: column;
-          align-items: stretch;
-        }
-
-        .hero-actions .button,
-        .hero-actions .text-link,
-        .agent-cta-row .text-link,
-        .lab-actions .button,
-        .lab-reset {
-          width: 100%;
-          justify-content: center;
-        }
-
-        .client-config summary {
-          align-items: flex-start;
-        }
-
-        .code-toolbar {
-          align-items: flex-start;
-        }
-
-        .code-shell pre {
-          padding: 15px;
-          font-size: 11px;
-        }
-
-        .hero-visual {
-          height: 500px;
-        }
-
-        .lab-permission-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .availability {
-          display: grid;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-
-        .js .reveal {
-          opacity: 1;
-          transform: none;
-        }
-      }
-
-      @media (prefers-reduced-transparency: reduce) {
-        .site-header {
-          background: var(--bg);
-          backdrop-filter: none;
-          -webkit-backdrop-filter: none;
-        }
-      }
-    </style>
+    <link rel="preload" as="image" href="assets/hero-anatomy.webp" type="image/webp" />
+    <link rel="stylesheet" href="assets/site.css" />
     <script>
       document.documentElement.classList.add("js");
+      window.setTimeout(() => {
+        if (window.__trainphaseSiteReady) return;
+        document.querySelectorAll(".reveal").forEach((element) => {
+          element.classList.add("is-visible");
+        });
+      }, 2800);
     </script>
     <script type="application/ld+json">
       {
@@ -1637,330 +37,638 @@
         "name": "TrainPhase",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "Web Browser, WeChat Mini Program",
-        "description": "面向认真训练者与教练的专业力量训练计划系统，覆盖计划构建、逐日执行、历史复盘与受控 AI 助手连接。",
+        "description": "面向认真训练者与教练的专业力量训练计划系统，覆盖计划编辑、逐日执行、动作历史统计与受控 AI 助手连接。",
+        "url": "https://trainphase.space/",
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "CNY"
         },
         "author": {
-          "@type": "Person",
-          "name": "熊灏"
+          "@type": "Organization",
+          "name": "TrainPhase"
         }
       }
     </script>
   </head>
-  <body>
-    <a class="skip-link" href="#main">跳到主要内容</a>
 
-    <header class="site-header">
-      <div class="shell nav">
+  <body id="top">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+
+    <header class="site-header" id="site-header">
+      <div class="shell header-inner">
         <a class="brand" href="#top" aria-label="TrainPhase 首页">
-          <img src="assets/trainphase-icon.png" alt="" width="34" height="34" />
-          <span>TrainPhase</span>
+          <img src="assets/trainphase-icon.png" alt="" width="30" height="30" />
+          <span class="brand-name">TrainPhase</span>
+          <span class="brand-sub">力量训练计划系统</span>
         </a>
 
-        <button
-          class="menu-button"
-          type="button"
-          aria-expanded="false"
-          aria-controls="site-navigation"
-        >
-          菜单
-        </button>
-
-        <nav class="nav-links" id="site-navigation" aria-label="主要导航">
-          <a href="#cycle">产品结构</a>
-          <a href="#product">当前界面</a>
-          <a href="#capabilities">计划能力</a>
-          <a href="#agent">Agent 连接</a>
-          <a href="#privacy">数据边界</a>
+        <nav class="desktop-nav" id="desktop-nav" aria-label="主要导航">
+          <a href="#cycle" data-nav="cycle"><span>01</span>系统结构</a>
+          <a href="#product" data-nav="product"><span>02</span>当前界面</a>
+          <a href="#capabilities" data-nav="capabilities"><span>03</span>计划能力</a>
+          <a href="#agent" data-nav="agent"><span>04</span>AI 助手</a>
+          <a href="#privacy" data-nav="privacy"><span>05</span>数据边界</a>
+          <a href="#contact" data-nav="contact"><span>06</span>联系</a>
         </nav>
+
+        <div class="header-actions">
+          <a class="header-cta" href="https://app.trainphase.space/" target="_blank" rel="noopener noreferrer">
+            进入网页版<span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <button
+            class="menu-toggle"
+            id="menu-toggle"
+            type="button"
+            aria-label="打开菜单"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </div>
     </header>
 
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true" inert>
+      <nav class="mobile-nav" aria-label="移动端导航">
+        <a href="#cycle"><span>01</span>系统结构</a>
+        <a href="#product"><span>02</span>当前界面</a>
+        <a href="#capabilities"><span>03</span>计划能力</a>
+        <a href="#agent"><span>04</span>AI 助手</a>
+        <a href="#privacy"><span>05</span>数据边界</a>
+        <a href="#contact"><span>06</span>联系</a>
+      </nav>
+      <div class="mobile-menu-foot">
+        <p>专业力量训练计划系统 · 四川省雅安市</p>
+        <a class="button button-primary" href="https://app.trainphase.space/" target="_blank" rel="noopener noreferrer">
+          进入网页版<span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+
     <main id="main">
-      <section id="top">
-        <div class="shell hero">
-          <div class="hero-copy reveal">
-            <h1>
-              <span>把训练计划，</span>
-              <span>变成可执行的周期。</span>
-            </h1>
-            <p class="lead">
-              组织周期、训练日和强度规则，再把完成结果带回下一次安排。
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="shell hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow reveal">
+              <span class="eyebrow-mark" aria-hidden="true"></span>
+              <span>专业力量训练计划系统</span>
+              <span class="eyebrow-en">STRENGTH PLANNING SYSTEM</span>
             </p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="#cycle">看产品怎么工作</a>
-              <a class="text-link" href="#product">浏览当前界面 <span aria-hidden="true">→</span></a>
+
+            <h1 class="reveal" id="hero-title" data-delay="60">
+              把训练计划，<br />
+              变成<em>可执行</em>的周期。
+            </h1>
+
+            <p class="hero-lead reveal" data-delay="120">
+              从计划编辑到逐日执行，逐组记录完成结果，再沉淀成动作统计与下一次安排。为认真训练的人与教练而做。
+            </p>
+
+            <div class="hero-actions reveal" data-delay="170">
+              <a class="button button-primary" href="https://app.trainphase.space/" target="_blank" rel="noopener noreferrer">
+                进入网页版<span class="arrow" aria-hidden="true">↗</span>
+              </a>
+              <a class="button button-ghost" href="#cycle">
+                看产品怎么工作<span class="arrow-down" aria-hidden="true">↓</span>
+              </a>
             </div>
+
+            <ul class="hero-meta reveal" data-delay="220">
+              <li>Web 端已开放</li>
+              <li>支持云同步</li>
+              <li>AI 助手可连接</li>
+            </ul>
           </div>
 
-          <figure class="hero-visual reveal">
-            <img
-              src="assets/trainphase-training-hero.webp"
-              alt="力量训练者在深色训练环境中完成传统硬拉"
-              width="1152"
-              height="1536"
-              fetchpriority="high"
-            />
-            <figcaption class="hero-caption">
-              <strong>计划负责方向，训练结果负责修正。</strong>
-              <img src="assets/trainphase-icon.png" alt="" width="42" height="42" />
-            </figcaption>
-          </figure>
+          <div class="hero-visual reveal" data-delay="120">
+            <span class="hero-side-label" aria-hidden="true">TRAINING / SYSTEM / 2026</span>
+
+            <figure class="hero-figure">
+              <img
+                src="assets/hero-anatomy.webp"
+                alt="硬拉动作的肌肉、骨骼与力学结构示意"
+                width="1086"
+                height="1448"
+                fetchpriority="high"
+              />
+              <figcaption class="hero-caption">
+                <span>MOVEMENT / 动作结构</span>
+                <strong>计划负责方向，<br />训练结果负责修正。</strong>
+              </figcaption>
+            </figure>
+
+            <div class="phone hero-phone" aria-hidden="true">
+              <div class="phone-status phone-status--mini">
+                <span class="phone-time">9:41</span>
+                <span class="phone-island"></span>
+                <span class="phone-status-icons">
+                  <span class="phone-signal"><i></i><i></i><i></i><i></i></span>
+                  <svg class="phone-wifi" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+                    <path d="M1.2 4.1a10.3 10.3 0 0 1 13.6 0" />
+                    <path d="M4 7a6.2 6.2 0 0 1 8 0" />
+                    <path d="M6.8 9.8a2.1 2.1 0 0 1 2.4 0" />
+                  </svg>
+                  <span class="phone-battery"><i></i></span>
+                </span>
+              </div>
+              <div class="phone-screen phone-screen--mini">
+                <img src="assets/app-plan-editor.png" alt="" width="390" height="844" loading="lazy" />
+              </div>
+              <div class="phone-home phone-home--mini" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+
+        <a class="hero-scroll" href="#cycle" aria-label="向下滚动到系统结构">
+          <span>向下滚动</span>
+          <i aria-hidden="true"></i>
+        </a>
+      </section>
+
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <div class="ticker-group">
+            <span>BLOCK</span><i></i><span>WEEK</span><i></i><span>TRAINING DAY</span><i></i><span>SLOT</span><i></i>
+            <span>SETS × REPS</span><i></i><span>%1RM</span><i></i><span>RPE</span><i></i><span>DUP</span><i></i>
+            <span>LEADER / ANCHOR</span><i></i><span>PEAKING</span><i></i><span>e1RM</span><i></i><span>DELOAD</span><i></i>
+          </div>
+          <div class="ticker-group">
+            <span>BLOCK</span><i></i><span>WEEK</span><i></i><span>TRAINING DAY</span><i></i><span>SLOT</span><i></i>
+            <span>SETS × REPS</span><i></i><span>%1RM</span><i></i><span>RPE</span><i></i><span>DUP</span><i></i>
+            <span>LEADER / ANCHOR</span><i></i><span>PEAKING</span><i></i><span>e1RM</span><i></i><span>DELOAD</span><i></i>
+          </div>
+        </div>
+      </div>
+
+      <section class="section" id="cycle" aria-labelledby="cycle-title">
+        <span class="section-ghost" aria-hidden="true">01</span>
+        <div class="shell">
+          <header class="section-head">
+            <div class="reveal">
+              <p class="kicker"><span>01</span><span>/</span>SYSTEM</p>
+              <h2 id="cycle-title">从计划来源<br />到训练反馈。</h2>
+            </div>
+            <div class="section-aside reveal" data-delay="80">
+              <p>TrainPhase 的核心不是一张训练表，而是一条能继续运行的数据链。</p>
+              <div class="aside-tag">
+                <strong>PLAN ≠ LOG</strong>
+                <span>计划与记录分开保存</span>
+              </div>
+            </div>
+          </header>
+
+          <p class="flow-caption reveal">一条计划进入系统后，会经历五个明确的阶段。</p>
+
+          <ol class="flow">
+            <li class="flow-item reveal">
+              <span class="flow-index" aria-hidden="true">01</span>
+              <h3>选择计划来源</h3>
+              <p>经典模板、引导式定制、自建计划与专项构建器提供不同起点。</p>
+              <span class="flow-tag">ENTRY</span>
+            </li>
+            <li class="flow-item reveal" data-delay="40">
+              <span class="flow-index" aria-hidden="true">02</span>
+              <h3>组织周期结构</h3>
+              <p>Block、周、训练日、动作 slot、组次、百分比或 RPE 在同一结构中验证。</p>
+              <span class="flow-tag">STRUCTURE</span>
+            </li>
+            <li class="flow-item reveal" data-delay="80">
+              <span class="flow-index" aria-hidden="true">03</span>
+              <h3>生成运行实例</h3>
+              <p>激活后形成独立计划实例，并记录当前阶段、周次和训练日。</p>
+              <span class="flow-tag">INSTANCE</span>
+            </li>
+            <li class="flow-item reveal" data-delay="120">
+              <span class="flow-index" aria-hidden="true">04</span>
+              <h3>执行当日训练</h3>
+              <p>计划处方进入训练页面，保存实际重量、次数、RPE 和完成状态。</p>
+              <span class="flow-tag">EXECUTE</span>
+            </li>
+            <li class="flow-item flow-item--loop reveal" data-delay="160">
+              <span class="flow-index" aria-hidden="true">05</span>
+              <h3>把结果带回计划</h3>
+              <p>动作统计、e1RM、疲劳解释和阶段衔接继续使用已完成训练，而不是覆盖过去。</p>
+              <span class="flow-tag flow-tag--loop">LOOP / 闭环</span>
+            </li>
+          </ol>
         </div>
       </section>
 
-      <section class="system-section" id="cycle">
+      <section class="section section--soft" id="product" aria-labelledby="product-title">
+        <span class="section-ghost" aria-hidden="true">02</span>
         <div class="shell">
-          <div class="section-copy reveal">
-            <h2>从计划来源到训练反馈。</h2>
-            <p>TrainPhase 的核心不是一张训练表，而是一条能继续运行的数据链。</p>
-          </div>
-
-          <div class="architecture reveal" aria-label="TrainPhase 产品结构">
-            <div class="architecture-intro">
-              <h3>计划进入系统后，会经历什么</h3>
-              <p>
-                每一层都保留自己的职责。模板不会被训练记录改写，运行计划也不会和原始计划混在一起。
-              </p>
+          <header class="section-head">
+            <div class="reveal">
+              <p class="kicker"><span>02</span><span>/</span>INTERFACE</p>
+              <h2 id="product-title">直接看当前版本。</h2>
             </div>
-            <ol class="architecture-flow">
-              <li>
-                <strong>选择计划来源</strong>
-                <span>经典模板、引导式定制、自建计划与专项构建器提供不同起点。</span>
-              </li>
-              <li>
-                <strong>组织周期结构</strong>
-                <span>Block、周、训练日、动作 slot、组次、百分比或 RPE 在同一结构中验证。</span>
-              </li>
-              <li>
-                <strong>生成运行实例</strong>
-                <span>激活后形成独立计划实例，并记录当前阶段、周次和训练日。</span>
-              </li>
-              <li>
-                <strong>执行当日训练</strong>
-                <span>计划处方进入训练页面，保存实际重量、次数、RPE 和完成状态。</span>
-              </li>
-              <li>
-                <strong>把结果带回计划</strong>
-                <span>历史、趋势、进阶和阶段衔接继续使用已完成训练，而不是覆盖过去。</span>
-              </li>
-            </ol>
-          </div>
-        </div>
-      </section>
-
-      <section class="interfaces-section" id="product">
-        <div class="shell">
-          <div class="section-copy reveal">
-            <h2>直接看当前版本。</h2>
-            <p>切换模块并滚动界面。下面的图片来自项目现有页面，不是概念效果图。</p>
-          </div>
-
-          <div class="interface-workbench reveal">
-            <div class="interface-tabs" role="tablist" aria-label="选择产品界面">
-              <button
-                class="interface-tab is-active"
-                type="button"
-                role="tab"
-                aria-selected="true"
-                data-interface="library"
-              >
-                <strong>动作库</strong>
-                <span>管理训练资源</span>
-              </button>
-              <button
-                class="interface-tab"
-                type="button"
-                role="tab"
-                aria-selected="false"
-                data-interface="builder"
-              >
-                <strong>计划构建器</strong>
-                <span>组织周期</span>
-              </button>
-              <button
-                class="interface-tab"
-                type="button"
-                role="tab"
-                aria-selected="false"
-                data-interface="plan"
-              >
-                <strong>周期详情</strong>
-                <span>检查与激活</span>
-              </button>
-              <button
-                class="interface-tab"
-                type="button"
-                role="tab"
-                aria-selected="false"
-                data-interface="scheduler"
-              >
-                <strong>DUP 调度</strong>
-                <span>安排波动</span>
-              </button>
+            <div class="section-aside reveal" data-delay="80">
+              <p>切换模块并滚动界面。下面的截图来自线上正式版，不是概念效果图。</p>
             </div>
+          </header>
 
-            <div class="interface-device-area">
-              <div class="device-frame">
-                <div class="device-topbar" aria-hidden="true">
-                  <span>TrainPhase</span>
-                  <span>当前页面可滚动</span>
-                </div>
-                <div class="screen-viewport" id="screen-viewport" tabindex="0">
-                  <img
-                    id="interface-image"
-                    src="assets/product-library.png"
-                    alt="TrainPhase 动作库当前界面"
-                    width="375"
-                    height="906"
-                  />
-                </div>
+          <div class="workbench reveal" data-workbench>
+            <div class="workbench-top">
+              <div class="workbench-label"><i aria-hidden="true"></i>产品界面 / LIVE BUILD</div>
+              <div class="workbench-tabs" role="tablist" aria-label="选择产品界面">
+                <button
+                  class="tab is-active"
+                  id="tab-plan-library"
+                  type="button"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="interface-panel"
+                  data-interface="plan-library"
+                >
+                  <span aria-hidden="true">01</span>计划库
+                </button>
+                <button
+                  class="tab"
+                  id="tab-plan-editor"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="interface-panel"
+                  data-interface="plan-editor"
+                  tabindex="-1"
+                >
+                  <span aria-hidden="true">02</span>计划编辑
+                </button>
+                <button
+                  class="tab"
+                  id="tab-action-library"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="interface-panel"
+                  data-interface="action-library"
+                  tabindex="-1"
+                >
+                  <span aria-hidden="true">03</span>动作库
+                </button>
+                <button
+                  class="tab"
+                  id="tab-action-stats"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="interface-panel"
+                  data-interface="action-stats"
+                  tabindex="-1"
+                >
+                  <span aria-hidden="true">04</span>动作统计
+                </button>
+                <button
+                  class="tab"
+                  id="tab-training-history"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="interface-panel"
+                  data-interface="training-history"
+                  tabindex="-1"
+                >
+                  <span aria-hidden="true">05</span>训练历史
+                </button>
+                <button
+                  class="tab"
+                  id="tab-dup-builder"
+                  type="button"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="interface-panel"
+                  data-interface="dup-builder"
+                  tabindex="-1"
+                >
+                  <span aria-hidden="true">06</span>DUP 调度
+                </button>
               </div>
             </div>
 
-            <div class="interface-details" aria-live="polite">
-              <div>
-                <span class="interface-path" id="interface-path">训练资源</span>
-                <h3 id="interface-title">动作库</h3>
+            <div class="workbench-body">
+              <div class="workbench-stage" id="interface-panel" role="tabpanel" aria-labelledby="tab-plan-library">
+                <div class="stage-grid" aria-hidden="true"></div>
+                <div class="phone">
+                  <div class="phone-status" aria-hidden="true">
+                    <span class="phone-time">9:41</span>
+                    <span class="phone-island"></span>
+                    <span class="phone-status-icons">
+                      <span class="phone-signal"><i></i><i></i><i></i><i></i></span>
+                      <svg class="phone-wifi" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+                        <path d="M1.2 4.1a10.3 10.3 0 0 1 13.6 0" />
+                        <path d="M4 7a6.2 6.2 0 0 1 8 0" />
+                        <path d="M6.8 9.8a2.1 2.1 0 0 1 2.4 0" />
+                      </svg>
+                      <span class="phone-battery"><i></i></span>
+                    </span>
+                  </div>
+                  <div class="phone-screen" id="screen-viewport" tabindex="0">
+                    <img
+                      id="interface-image"
+                      src="assets/app-plan-library.png"
+                      alt="TrainPhase 计划库当前界面"
+                      width="390"
+                      height="844"
+                    />
+                  </div>
+                  <div class="phone-home" aria-hidden="true"></div>
+                </div>
+                <span class="stage-caption">移动端截图 · 可滚动查看</span>
+              </div>
+
+              <div class="interface-details" aria-live="polite">
+                <div class="interface-head">
+                  <p class="interface-path" id="interface-path">计划入口</p>
+                  <span class="interface-count" id="interface-count">01 / 06</span>
+                </div>
+                <h3 id="interface-title">计划库</h3>
                 <p class="interface-summary" id="interface-summary">
-                  搜索和筛选训练动作，查看器械与肌群信息，为计划中的动作槽位准备可复用资源。
+                  从 76 套计划模板开始，按目标与难度筛选；也可以直接制定自己的计划。
                 </p>
                 <div class="interface-facts" id="interface-facts">
-                  <div class="interface-fact">按名称、器械与肌群搜索</div>
-                  <div class="interface-fact">主项、变式和辅助动作分组</div>
-                  <div class="interface-fact">动作标签帮助快速筛选</div>
-                  <div class="interface-fact">可进入计划动作槽位</div>
+                  <div class="interface-fact">76 套内置计划模板</div>
+                  <div class="interface-fact">初级 / 中级 / 高级筛选</div>
+                  <div class="interface-fact">计划卡片直接进入详情</div>
+                  <div class="interface-fact">支持制定自己的计划</div>
                 </div>
-              </div>
-              <div class="interface-note">
-                <strong>在系统中的位置</strong>
-                <span id="interface-note">这是计划结构下方的训练资源层，为构建器和训练日提供动作数据。</span>
+                <div class="interface-note">
+                  <span>在系统中的位置</span>
+                  <p id="interface-note">计划库是计划进入系统的起点；模板提供规则，激活后才会生成独立的运行实例。</p>
+                </div>
               </div>
             </div>
           </div>
+
+          <div class="workbench-foot">
+            <span>移动端截图 · 点击标签切换模块</span>
+            <span>SCROLL TO INSPECT</span>
+          </div>
         </div>
       </section>
 
-      <section class="capability-section" id="capabilities">
-        <div class="shell capability-layout">
-          <div class="capability-copy reveal">
-            <h2>控制权留在训练者手里。</h2>
-            <p>
-              可以从成熟模板开始，也可以深入到周期、训练日、强度规则和阶段衔接。系统负责校验，不替你隐藏关键决定。
-            </p>
-          </div>
-
-          <div class="capability-groups">
-            <article class="capability-group reveal">
-              <h3>不同计划入口，共用一套运行逻辑</h3>
-              <p>经典模板、自建计划和专项构建器最后都会进入相同的验证、激活和逐日执行流程。</p>
-              <div class="capability-terms" aria-label="部分计划入口">
-                <span>引导式定制</span>
-                <span>自建计划</span>
-                <span>Nuckols 组合</span>
-                <span>Leader/Anchor</span>
-                <span>Peaking</span>
-                <span>DUP</span>
+      <section class="section" id="capabilities" aria-labelledby="capabilities-title">
+        <span class="section-ghost" aria-hidden="true">03</span>
+        <div class="shell">
+          <div class="capability-layout">
+            <div class="capability-copy reveal">
+              <p class="kicker"><span>03</span><span>/</span>CONTROL</p>
+              <h2 id="capabilities-title">控制权<br />留在训练者手里。</h2>
+              <p>
+                可以从成熟模板开始，也可以深入到周期、训练日、强度规则和阶段衔接。系统负责校验，不替你隐藏关键决定。
+              </p>
+              <div class="capability-signature" aria-hidden="true">
+                <strong>03</strong>
+                <span>BUILT AROUND<br />THE TRAINING CYCLE</span>
               </div>
-            </article>
+            </div>
 
-            <article class="capability-group reveal">
-              <h3>计划编辑和训练历史分开保存</h3>
-              <p>修改计划不会重写已经完成的训练。历史保存实际表现，下一次处方单独保存进阶结果。</p>
-            </article>
+            <div class="principles">
+              <article class="principle reveal">
+                <span class="principle-index" aria-hidden="true">01</span>
+                <div>
+                  <h3>不同计划入口，共用一套运行逻辑</h3>
+                  <p>经典模板、自建计划和专项构建器最后都会进入相同的验证、激活和逐日执行流程。</p>
+                  <div class="tags" aria-label="部分计划入口">
+                    <span>引导式定制</span>
+                    <span>自建计划</span>
+                    <span>Nuckols 组合</span>
+                    <span>Leader/Anchor</span>
+                    <span>Peaking</span>
+                    <span>DUP</span>
+                  </div>
+                </div>
+              </article>
 
-            <article class="capability-group reveal">
-              <h3>阶段推进需要确认</h3>
-              <p>积累、转化、实现和过渡不会静默切换。系统准备下一阶段，训练者确认后再继续。</p>
-            </article>
+              <article class="principle reveal" data-delay="60">
+                <span class="principle-index" aria-hidden="true">02</span>
+                <div>
+                  <h3>计划编辑和训练历史分开保存</h3>
+                  <p>修改计划不会重写已经完成的训练。历史保存实际表现，下一次处方单独保存进阶结果。</p>
+                </div>
+              </article>
+
+              <article class="principle reveal" data-delay="120">
+                <span class="principle-index" aria-hidden="true">03</span>
+                <div>
+                  <h3>计划编辑系统，把结构一次性看见</h3>
+                  <p>在周期、周、训练日和动作处方之间切换，实时查看构建检查、周期负荷与总组数。所有结构修改都可撤销。</p>
+                  <div class="tags" aria-label="计划编辑系统的能力">
+                    <span>构建检查</span>
+                    <span>周期负荷</span>
+                    <span>动作处方</span>
+                    <span>结构撤销</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="principle reveal" data-delay="160">
+                <span class="principle-index" aria-hidden="true">04</span>
+                <div>
+                  <h3>动作统计，把训练变成可读的趋势</h3>
+                  <p>按动作汇总训练次数、完成组、总容量、e1RM 与 PR，并给出疲劳解释和下周建议。</p>
+                  <div class="tags" aria-label="动作统计与分析能力">
+                    <span>e1RM</span>
+                    <span>PR</span>
+                    <span>周容量</span>
+                    <span>疲劳解释</span>
+                    <span>下周建议</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="principle reveal" data-delay="200">
+                <span class="principle-index" aria-hidden="true">05</span>
+                <div>
+                  <h3>阶段推进需要确认</h3>
+                  <p>积累、转化、实现和过渡不会静默切换。系统准备下一阶段，训练者确认后再继续。</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="feature-index reveal">
+            <div class="feature-head">
+              <span>功能索引 / FEATURE INDEX</span>
+              <span>以应用内实际版本为准</span>
+            </div>
+            <dl>
+              <div class="feature-row">
+                <dt>计划</dt>
+                <dd>
+                  <span>计划库</span>
+                  <span>计划编辑</span>
+                  <span>计划详情</span>
+                  <span>DUP 调度</span>
+                  <span>引导式定制</span>
+                  <span>Nuckols 组合</span>
+                  <span>Leader/Anchor</span>
+                  <span>Peaking</span>
+                </dd>
+              </div>
+              <div class="feature-row">
+                <dt>动作</dt>
+                <dd>
+                  <span>1116 动作库</span>
+                  <span>自定义动作</span>
+                  <span>动作详情</span>
+                  <span>主项 / 变式 / 辅助</span>
+                  <span>器械与肌群标签</span>
+                </dd>
+              </div>
+              <div class="feature-row">
+                <dt>训练</dt>
+                <dd>
+                  <span>逐日执行</span>
+                  <span>组次与 RPE</span>
+                  <span>休息计时</span>
+                  <span>热身组</span>
+                  <span>闪卡记录</span>
+                  <span>训练续跑</span>
+                  <span>训练小结</span>
+                </dd>
+              </div>
+              <div class="feature-row">
+                <dt>分析</dt>
+                <dd>
+                  <span>动作统计</span>
+                  <span>趋势 / 强度 / 容量</span>
+                  <span>e1RM / PR</span>
+                  <span>疲劳管理</span>
+                  <span>高级监控</span>
+                  <span>训练历史</span>
+                </dd>
+              </div>
+              <div class="feature-row">
+                <dt>工具</dt>
+                <dd>
+                  <span>力量计算器</span>
+                  <span>1RM / TM</span>
+                  <span>重量换算</span>
+                  <span>比赛日试举</span>
+                  <span>Wilks 计算</span>
+                </dd>
+              </div>
+              <div class="feature-row">
+                <dt>协作</dt>
+                <dd>
+                  <span>教练工作台</span>
+                  <span>学员详情</span>
+                  <span>云端同步</span>
+                  <span>AI 助手</span>
+                  <span>AI 变更记录</span>
+                  <span>数据导出</span>
+                </dd>
+              </div>
+            </dl>
           </div>
         </div>
       </section>
 
-      <section class="agent-section" id="agent">
+      <section class="section section--soft" id="agent" aria-labelledby="agent-title">
+        <span class="section-ghost" aria-hidden="true">04</span>
         <div class="shell">
           <div class="agent-layout">
             <div class="agent-copy reveal">
-              <h2>让 AI 助手读懂你的训练。</h2>
+              <p class="kicker"><span>04</span><span>/</span>AI BRIDGE</p>
+              <h2 id="agent-title">让 AI 助手<br />读懂你的训练。</h2>
               <p>
                 连接你常用的 AI 助手后，它可以读取你允许的训练信息，结合当前计划、训练进度和趋势给出建议。
               </p>
 
               <div class="agent-features">
                 <article class="agent-feature">
-                  <strong>回答基于你的真实训练</strong>
-                  <span>读取当前计划、训练进度、主项重量和近期趋势，不需要反复手动描述。</span>
+                  <span aria-hidden="true">01</span>
+                  <div>
+                    <strong>回答基于你的真实训练</strong>
+                    <p>读取当前计划、训练进度、主项重量和近期趋势，不需要反复手动描述。</p>
+                  </div>
                 </article>
                 <article class="agent-feature">
-                  <strong>能分析，也能生成调整提案</strong>
-                  <span>可以帮你复盘训练、比较阶段表现，并准备计划修改建议。</span>
+                  <span aria-hidden="true">02</span>
+                  <div>
+                    <strong>能分析，也能生成调整提案</strong>
+                    <p>可以帮你复盘训练、比较阶段表现，并准备计划修改建议。</p>
+                  </div>
                 </article>
                 <article class="agent-feature">
-                  <strong>每一步都由你确认</strong>
-                  <span>敏感信息需要单独授权，修改计划只生成提案，确认后才会写入。</span>
+                  <span aria-hidden="true">03</span>
+                  <div>
+                    <strong>每一步都由你确认</strong>
+                    <p>敏感信息需要单独授权，修改计划只生成提案，确认后才会写入。</p>
+                  </div>
                 </article>
               </div>
 
-              <div class="agent-cta-row">
-                <a
-                  class="text-link"
-                  href="https://app.trainphase.space/#/subpackages/secondary/agent-bridge/agent-bridge"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >打开连接页面 <span aria-hidden="true">→</span></a>
-              </div>
+              <a
+                class="text-link"
+                href="https://app.trainphase.space/#/subpackages/secondary/agent-bridge/agent-bridge"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                打开连接页面<span class="arrow" aria-hidden="true">↗</span>
+              </a>
             </div>
 
-            <div class="connection-lab reveal" id="agent-demo" data-demo-state="setup">
-              <div class="lab-header">
-                <strong>连接演示</strong>
-                <span>不安装程序，不读取真实账号</span>
+            <div class="connection-lab reveal" id="agent-demo" data-demo-state="setup" data-delay="80">
+              <div class="lab-bar">
+                <span class="lab-title"><i aria-hidden="true"></i>连接演示</span>
+                <span>本地模拟 · 不读取真实账号</span>
               </div>
               <div class="lab-body" aria-live="polite">
-                <span class="lab-state" id="lab-state">安装组件</span>
+                <div class="lab-status-row">
+                  <span class="lab-state" id="lab-state">安装组件</span>
+                  <span class="lab-step" id="lab-step">STEP 01 / 04</span>
+                </div>
                 <h3 id="lab-title">准备 TrainPhase AI Bridge</h3>
-                <p id="lab-description">
-                  安装本机连接组件，再让 AI 助手发起第一次 TrainPhase 请求。
-                </p>
+                <p id="lab-description">安装本机连接组件，再让 AI 助手发起第一次 TrainPhase 请求。</p>
 
-                <div class="lab-permissions">
-                  <div class="lab-panel-head">
-                    <strong>首次可用信息</strong>
-                    <span>更多信息会继续询问</span>
+                <div class="lab-panels">
+                  <div class="lab-panel">
+                    <div class="lab-panel-head">
+                      <strong>首次可用信息</strong>
+                      <span>更多信息会继续询问</span>
+                    </div>
+                    <div class="lab-permission-grid">
+                      <span>当前计划摘要</span>
+                      <span>当前训练进度</span>
+                      <span>主项重量</span>
+                      <span>28 天趋势摘要</span>
+                    </div>
                   </div>
-                  <div class="lab-permission-grid">
-                    <span>当前计划摘要</span>
-                    <span>当前训练进度</span>
-                    <span>主项重量</span>
-                    <span>28 天趋势摘要</span>
+
+                  <div class="lab-panel" id="lab-request" hidden>
+                    <div class="lab-panel-head">
+                      <strong>AI 助手请求连接</strong>
+                      <span>等待确认</span>
+                    </div>
+                    <strong class="lab-panel-title">OpenCode（示例）</strong>
+                    <p>这台电脑 / Windows / 请求基础训练信息</p>
+                  </div>
+
+                  <div class="lab-panel" id="lab-activity" hidden>
+                    <div class="lab-panel-head">
+                      <strong>最近活动</strong>
+                      <span>刚刚</span>
+                    </div>
+                    <strong class="lab-panel-title" id="lab-activity-title">连接已建立</strong>
+                    <p id="lab-activity-copy">现在可以在 AI 助手中询问你的训练情况。</p>
                   </div>
                 </div>
 
-                <div class="lab-request" id="lab-request" hidden>
-                  <div class="lab-panel-head">
-                    <strong>AI 助手请求连接</strong>
-                    <span>等待确认</span>
-                  </div>
-                  <strong>OpenCode（示例）</strong>
-                  <p>这台电脑 / Windows / 请求基础训练信息</p>
-                </div>
-
-                <div class="lab-activity" id="lab-activity" hidden>
-                  <div class="lab-panel-head">
-                    <strong>最近活动</strong>
-                    <span>刚刚</span>
-                  </div>
-                  <strong id="lab-activity-title">连接已建立</strong>
-                  <p id="lab-activity-copy">现在可以在 AI 助手中询问你的训练情况。</p>
-                </div>
+                <ol class="lab-progress" aria-label="连接流程">
+                  <li data-step="0">安装</li>
+                  <li data-step="1">请求</li>
+                  <li data-step="2">确认</li>
+                  <li data-step="3">连接</li>
+                </ol>
 
                 <div class="lab-actions">
-                  <button class="button button-primary" id="lab-primary" type="button">
-                    模拟完成安装
-                  </button>
+                  <button class="button button-primary" id="lab-primary" type="button">模拟完成安装</button>
                   <button class="lab-reset" id="lab-reset" type="button">重新演示</button>
                 </div>
               </div>
@@ -1968,44 +676,47 @@
           </div>
 
           <div class="agent-setup" id="agent-setup">
-            <div class="agent-setup-heading reveal">
-              <h3>怎么连接。</h3>
+            <div class="setup-head reveal">
+              <div>
+                <p class="kicker"><span>04.1</span><span>/</span>SETUP</p>
+                <h3>怎么连接。</h3>
+              </div>
               <p>首次连接按下面的顺序完成，之后打开桌面 H5 并启动 AI 助手即可继续使用。</p>
             </div>
 
-            <div class="agent-setup-grid">
-              <ol class="connection-flow reveal">
-                <li>
+            <div class="setup-grid">
+              <ol class="steps reveal">
+                <li class="step">
                   <strong>打开连接页面</strong>
                   <span>在电脑浏览器登录 TrainPhase，进入“我的 → 外部 AI 助手”，并保持页面打开。</span>
                 </li>
-                <li>
+                <li class="step">
                   <strong>安装 AI Bridge</strong>
                   <span>点击页面中的安装入口，下载并运行 TrainPhase AI Bridge 安装器。</span>
                 </li>
-                <li>
+                <li class="step">
                   <strong>配置你的 AI 助手</strong>
                   <span>Codex 等已适配助手可一键配置；OpenCode、CodeBuddy 使用右侧配置示例。</span>
                 </li>
-                <li>
+                <li class="step">
                   <strong>重启 AI 助手</strong>
                   <span>保存配置后完全退出并重新打开客户端，让 TrainPhase 工具生效。</span>
                 </li>
-                <li>
+                <li class="step">
                   <strong>发起第一次请求</strong>
                   <span>例如输入：“使用 TrainPhase 读取我的当前训练计划摘要。”</span>
                 </li>
-                <li>
+                <li class="step">
                   <strong>回到 H5 确认</strong>
                   <span>核对助手名称和请求内容，允许本次连接。敏感读取和计划提案会继续单独确认。</span>
                 </li>
               </ol>
 
-              <div class="agent-client-panel reveal">
+              <div class="clients-panel reveal" data-delay="80">
                 <h3>选择你的 AI 助手</h3>
                 <p>已适配的助手可由安装器配置，其他支持本地 stdio MCP 的客户端可以手动添加。</p>
 
-                <strong class="client-group-label">可一键配置</strong>
+                <span class="client-label">可一键配置</span>
                 <div class="client-tags" aria-label="可一键配置的客户端">
                   <span>Codex（Windows / WSL）</span>
                   <span>Hermes（WSL）</span>
@@ -2014,14 +725,14 @@
                   <span>VS Code</span>
                 </div>
 
-                <strong class="client-group-label">手动添加</strong>
+                <span class="client-label">手动添加</span>
                 <div class="client-tags" aria-label="可手动添加的客户端">
                   <span>OpenCode</span>
                   <span>CodeBuddy</span>
                   <span>其他本地 stdio MCP 客户端</span>
                 </div>
 
-                <div class="agent-configs">
+                <div class="client-configs">
                   <details class="client-config" open>
                     <summary>
                       <span class="config-summary-copy">
@@ -2101,367 +812,211 @@
           </div>
         </div>
       </section>
-      <section class="trust-section" id="privacy">
-        <div class="shell trust-layout">
-          <div class="trust-copy reveal">
-            <h2>训练数据有明确边界。</h2>
-            <p>云同步、教练协作和外部 AI 助手都建立在明确告知与主动授权之上。</p>
-            <div class="trust-points">
-              <div class="trust-point">
-                <strong>权限最小化</strong>
-                <p>只申请完成当前功能所需的权限。</p>
-              </div>
-              <div class="trust-point">
-                <strong>用户主动选择</strong>
-                <p>云同步与相关处理在启用前单独提示。</p>
-              </div>
-              <div class="trust-point">
-                <strong>健康边界</strong>
-                <p>产品提供训练辅助，不替代医疗诊断。</p>
-              </div>
-              <div class="trust-point">
-                <strong>成年用户</strong>
-                <p>当前版本按 18 岁以上使用场景设计。</p>
+
+      <section class="section" id="privacy" aria-labelledby="privacy-title">
+        <span class="section-ghost" aria-hidden="true">05</span>
+        <div class="shell">
+          <div class="privacy-layout">
+            <div class="privacy-copy reveal">
+              <p class="kicker"><span>05</span><span>/</span>BOUNDARY</p>
+              <h2 id="privacy-title">训练数据<br />有明确边界。</h2>
+              <p>云同步、教练协作和外部 AI 助手都建立在明确告知与主动授权之上。</p>
+
+              <div class="privacy-points">
+                <div class="privacy-point">
+                  <strong>权限最小化</strong>
+                  <p>只申请完成当前功能所需的权限。</p>
+                </div>
+                <div class="privacy-point">
+                  <strong>用户主动选择</strong>
+                  <p>云同步与相关处理在启用前单独提示。</p>
+                </div>
+                <div class="privacy-point">
+                  <strong>健康边界</strong>
+                  <p>产品提供训练辅助，不替代医疗诊断。</p>
+                </div>
+                <div class="privacy-point">
+                  <strong>成年用户</strong>
+                  <p>当前版本按 18 岁以上使用场景设计。</p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="legal-list reveal" aria-label="法律文件">
-            <a class="legal-link" href="legal/privacy.html">
-              <span>
-                <strong>隐私政策</strong>
-                <span>个人信息处理、权限与用户权利</span>
-              </span>
-              <b aria-hidden="true">→</b>
-            </a>
-            <a class="legal-link" href="legal/terms.html">
-              <span>
-                <strong>用户协议</strong>
-                <span>服务范围、账号使用与责任边界</span>
-              </span>
-              <b aria-hidden="true">→</b>
-            </a>
-            <a class="legal-link" href="legal/health.html">
-              <span>
-                <strong>健康免责声明</strong>
-                <span>训练风险提示与健康使用要求</span>
-              </span>
-              <b aria-hidden="true">→</b>
-            </a>
+            <div class="legal-list reveal" data-delay="80" aria-label="法律文件">
+              <div class="legal-head"><span>LEGAL / 法律文件</span><span>03</span></div>
+              <a class="legal-link" href="legal/privacy.html">
+                <span>
+                  <strong>隐私政策</strong>
+                  <span>个人信息处理、权限与用户权利</span>
+                </span>
+                <b aria-hidden="true">↗</b>
+              </a>
+              <a class="legal-link" href="legal/terms.html">
+                <span>
+                  <strong>用户协议</strong>
+                  <span>服务范围、账号使用与责任边界</span>
+                </span>
+                <b aria-hidden="true">↗</b>
+              </a>
+              <a class="legal-link" href="legal/health.html">
+                <span>
+                  <strong>健康免责声明</strong>
+                  <span>训练风险提示与健康使用要求</span>
+                </span>
+                <b aria-hidden="true">↗</b>
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="access-section" id="access">
+      <section class="access-section" id="access" aria-labelledby="access-title">
         <div class="shell">
           <div class="access-panel reveal">
-            <div>
-              <h2>先从网页版开始。</h2>
-              <p>使用浏览器构建计划、执行训练和查看历史。iOS 与 Android 客户端入口已经预留。</p>
-              <div class="availability" aria-label="平台状态">
-                <span><strong>Web</strong> 已开放</span>
-                <span><strong>iOS</strong> 规划中</span>
-                <span><strong>Android</strong> 规划中</span>
-              </div>
+            <div class="access-top">
+              <span class="access-kicker"><i aria-hidden="true"></i>ACCESS / WEB</span>
+              <span class="access-status"><i aria-hidden="true"></i>Web 已开放</span>
             </div>
-            <a
-              class="button button-primary"
-              href="https://app.trainphase.space/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >进入网页版</a>
+            <h2 id="access-title">先从网页版<br />开始。</h2>
+            <div class="access-bottom">
+              <div>
+                <p>使用浏览器构建计划、执行训练和查看历史。<br />iOS 与 Android 客户端入口已经预留。</p>
+                <div class="availability" aria-label="平台状态">
+                  <span><strong>Web</strong> 已开放</span>
+                  <span><strong>iOS</strong> 规划中</span>
+                  <span><strong>Android</strong> 规划中</span>
+                </div>
+              </div>
+              <a class="button button-dark" href="https://app.trainphase.space/" target="_blank" rel="noopener noreferrer">
+                进入网页版<span class="arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <span class="access-watermark" aria-hidden="true">TRAINPHASE</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="contact" aria-labelledby="contact-title">
+        <span class="section-ghost" aria-hidden="true">06</span>
+        <div class="shell">
+          <header class="contact-head">
+            <div class="reveal">
+              <p class="kicker"><span>06</span><span>/</span>CONTACT</p>
+              <h2 id="contact-title">扫码联系。</h2>
+            </div>
+            <p class="reveal" data-delay="80">
+              微信与 QQ 是目前公开的联系方式。训练计划、产品反馈或合作，都可以从这里开始。
+            </p>
+          </header>
+
+          <div class="contact-layout">
+            <div class="contact-grid">
+              <article class="contact-card reveal">
+                <a
+                  class="qr-plate qr-plate--light"
+                  href="assets/qr-wechat.png"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="打开微信二维码大图"
+                >
+                  <img src="assets/qr-wechat.png" alt="微信联系二维码" width="694" height="725" decoding="async" fetchpriority="low" />
+                </a>
+                <div class="contact-card-body">
+                  <div class="contact-card-head">
+                    <span class="contact-channel">WECHAT</span>
+                    <span class="contact-index" aria-hidden="true">01</span>
+                  </div>
+                  <h3>微信</h3>
+                  <p>请使用微信扫码添加</p>
+                  <span class="contact-hint">点击二维码查看大图</span>
+                </div>
+              </article>
+
+              <article class="contact-card reveal" data-delay="80">
+                <a
+                  class="qr-plate qr-plate--dark"
+                  href="assets/qr-qq.png"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="打开 QQ 二维码大图"
+                >
+                  <img src="assets/qr-qq.png" alt="QQ 联系二维码" width="596" height="618" decoding="async" fetchpriority="low" />
+                </a>
+                <div class="contact-card-body">
+                  <div class="contact-card-head">
+                    <span class="contact-channel">QQ</span>
+                    <span class="contact-index" aria-hidden="true">02</span>
+                  </div>
+                  <h3>QQ</h3>
+                  <p>请使用 QQ 扫码添加</p>
+                  <span class="contact-hint">点击二维码查看大图</span>
+                </div>
+              </article>
+            </div>
+
+            <aside class="contact-aside reveal" data-delay="120" aria-label="联系信息">
+              <div class="contact-meta">
+                <div>
+                  <span>所在地 / LOCATION</span>
+                  <strong>四川省雅安市</strong>
+                </div>
+                <div>
+                  <span>添加时 / NOTE</span>
+                  <strong>请简单说明来意</strong>
+                </div>
+              </div>
+              <p class="contact-note">
+                二维码仅用于沟通，不会自动收集你的信息。添加后请勿发送不必要的健康数据或身份证明。
+              </p>
+            </aside>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div class="shell footer-grid">
-        <div>
-          <div class="footer-brand">
-            <img src="assets/trainphase-icon.png" alt="" width="32" height="32" />
-            <span>TrainPhase</span>
+      <div class="shell">
+        <div class="footer-main">
+          <div class="footer-brand-col">
+            <a class="brand" href="#top" aria-label="TrainPhase 首页">
+              <img src="assets/trainphase-icon.png" alt="" width="30" height="30" />
+              <span class="brand-name">TrainPhase</span>
+            </a>
+            <p>面向认真训练者与教练的专业力量训练计划系统。</p>
+            <span class="footer-location">四川省雅安市</span>
           </div>
-          <div class="contact-lines">
-            <span>运营主体：熊灏</span>
-            <a href="mailto:hxiong443@gmail.com">联系与隐私邮箱：hxiong443@gmail.com</a>
-            <a href="tel:+8618080599619">联系电话：18080599619</a>
-            <span>公开联系地址：四川省雅安市雨城区幸福广场A栋2单元</span>
+
+          <nav class="footer-col" aria-label="产品导航">
+            <span>产品</span>
+            <a href="#cycle">系统结构</a>
+            <a href="#product">当前界面</a>
+            <a href="#capabilities">计划能力</a>
+            <a href="#agent">AI 助手</a>
+          </nav>
+
+          <nav class="footer-col" aria-label="法律文件">
+            <span>文档</span>
+            <a href="legal/privacy.html">隐私政策</a>
+            <a href="legal/terms.html">用户协议</a>
+            <a href="legal/health.html">健康免责声明</a>
+          </nav>
+
+          <div class="footer-col">
+            <span>联系</span>
+            <a href="#contact">微信 / QQ</a>
+            <a href="#contact">扫码联系</a>
+            <span class="footer-note">仅通过二维码沟通</span>
           </div>
-          <p class="copyright">© <span id="year">2026</span> TrainPhase. 保留所有权利。</p>
         </div>
 
-        <nav class="footer-links" aria-label="页脚导航">
-          <a href="#product">当前界面</a>
-          <a href="#agent">Agent 连接</a>
-          <a href="legal/privacy.html">隐私政策</a>
-          <a href="legal/terms.html">用户协议</a>
-          <a href="legal/health.html">健康免责声明</a>
-        </nav>
+        <div class="footer-bottom">
+          <span>© <span id="year">2026</span> TrainPhase. 保留所有权利。</span>
+          <span class="footer-tagline">PLAN · EXECUTE · REVIEW</span>
+          <a class="back-top" href="#top">回到顶部<span aria-hidden="true">↑</span></a>
+        </div>
       </div>
     </footer>
 
-    <script>
-      (() => {
-        const menuButton = document.querySelector(".menu-button");
-        const navigation = document.querySelector(".nav-links");
-        const navLinks = navigation.querySelectorAll("a");
-
-        menuButton.addEventListener("click", () => {
-          const isOpen = navigation.classList.toggle("is-open");
-          menuButton.setAttribute("aria-expanded", String(isOpen));
-          menuButton.textContent = isOpen ? "关闭" : "菜单";
-        });
-
-        navLinks.forEach((link) => {
-          link.addEventListener("click", () => {
-            navigation.classList.remove("is-open");
-            menuButton.setAttribute("aria-expanded", "false");
-            menuButton.textContent = "菜单";
-          });
-        });
-
-        const interfaces = {
-          library: {
-            image: "assets/product-library.png",
-            alt: "TrainPhase 动作库当前界面",
-            width: 375,
-            height: 906,
-            path: "训练资源",
-            title: "动作库",
-            summary: "搜索和筛选训练动作，查看器械与肌群信息，为计划中的动作槽位准备可复用资源。",
-            facts: [
-              "按名称、器械与肌群搜索",
-              "主项、变式和辅助动作分组",
-              "动作标签帮助快速筛选",
-              "可进入计划动作槽位"
-            ],
-            note: "这是计划结构下方的训练资源层，为构建器和训练日提供动作数据。"
-          },
-          builder: {
-            image: "assets/product-builder.png",
-            alt: "TrainPhase 专业计划构建器当前界面",
-            width: 375,
-            height: 812,
-            path: "周期结构",
-            title: "专业计划构建器",
-            summary: "编辑周期、训练日、动作 slot、强度处方和减载策略，并在保存前完成结构验证。",
-            facts: [
-              "单周与多周周期结构",
-              "训练日和动作 slot 编排",
-              "百分比或 RPE 处方",
-              "验证、草稿与激活分开"
-            ],
-            note: "构建器输出的是计划定义，激活后才生成独立运行实例。"
-          },
-          plan: {
-            image: "assets/product-plan.png",
-            alt: "TrainPhase 周期详情当前界面",
-            width: 375,
-            height: 1546,
-            path: "检查与激活",
-            title: "周期详情",
-            summary: "在训练开始前检查计划规则、阶段安排、每周结构和关键配置，再决定是否激活。",
-            facts: [
-              "计划规则集中呈现",
-              "周次和训练日完整展开",
-              "关键重量与强度可检查",
-              "激活前保留最终确认"
-            ],
-            note: "激活把静态计划转换成带当前周次与训练日位置的运行实例。"
-          },
-          scheduler: {
-            image: "assets/product-scheduler.png",
-            alt: "TrainPhase DUP 调度器当前界面",
-            width: 407,
-            height: 1236,
-            path: "负荷波动",
-            title: "DUP 调度器",
-            summary: "按训练日定义容量与强度波动，让每个训练日承担不同刺激，而不是重复同一处方。",
-            facts: [
-              "训练日角色单独配置",
-              "强度与容量按日波动",
-              "自动检查调度冲突",
-              "生成结果进入统一计划流程"
-            ],
-            note: "专项构建器不会绕过验证，结果仍进入相同的计划运行链。"
-          }
-        };
-
-        const interfaceTabs = Array.from(document.querySelectorAll("[data-interface]"));
-        const interfaceImage = document.getElementById("interface-image");
-        const interfacePath = document.getElementById("interface-path");
-        const interfaceTitle = document.getElementById("interface-title");
-        const interfaceSummary = document.getElementById("interface-summary");
-        const interfaceFacts = document.getElementById("interface-facts");
-        const interfaceNote = document.getElementById("interface-note");
-        const screenViewport = document.getElementById("screen-viewport");
-
-        const renderInterface = (id) => {
-          const item = interfaces[id];
-          if (!item) return;
-
-          interfaceImage.src = item.image;
-          interfaceImage.alt = item.alt;
-          interfaceImage.width = item.width;
-          interfaceImage.height = item.height;
-          interfacePath.textContent = item.path;
-          interfaceTitle.textContent = item.title;
-          interfaceSummary.textContent = item.summary;
-          interfaceNote.textContent = item.note;
-          interfaceFacts.replaceChildren(
-            ...item.facts.map((fact) => {
-              const element = document.createElement("div");
-              element.className = "interface-fact";
-              element.textContent = fact;
-              return element;
-            })
-          );
-          screenViewport.scrollTop = 0;
-
-          interfaceTabs.forEach((tab) => {
-            const active = tab.dataset.interface === id;
-            tab.classList.toggle("is-active", active);
-            tab.setAttribute("aria-selected", String(active));
-          });
-        };
-
-        interfaceTabs.forEach((tab) => {
-          tab.addEventListener("click", () => renderInterface(tab.dataset.interface));
-        });
-
-        const labStates = [
-          {
-            id: "setup",
-            state: "安装组件",
-            title: "准备 TrainPhase AI Bridge",
-            description: "安装本机连接组件，再为你常用的 AI 助手添加 TrainPhase。",
-            button: "模拟完成安装"
-          },
-          {
-            id: "waiting",
-            state: "等待助手",
-            title: "在外部 AI 助手中发起请求",
-            description: "例如输入：使用 TrainPhase 读取我的当前训练计划摘要。",
-            button: "模拟 Agent 请求"
-          },
-          {
-            id: "request",
-            state: "等待确认",
-            title: "回到 H5 确认连接",
-            description: "核对助手名称、设备和请求内容，然后允许本次连接。",
-            button: "允许本次连接",
-            request: true
-          },
-          {
-            id: "connected",
-            state: "连接完成",
-            title: "可以开始询问训练",
-            description: "AI 助手现在可以读取已允许的信息，并基于你的训练给出建议。",
-            button: "结束演示",
-            activity: true
-          }
-        ];
-
-        const lab = document.getElementById("agent-demo");
-        const labState = document.getElementById("lab-state");
-        const labTitle = document.getElementById("lab-title");
-        const labDescription = document.getElementById("lab-description");
-        const labRequest = document.getElementById("lab-request");
-        const labActivity = document.getElementById("lab-activity");
-        const labPrimary = document.getElementById("lab-primary");
-        const labReset = document.getElementById("lab-reset");
-        let labIndex = 0;
-
-        const renderLab = () => {
-          const current = labStates[labIndex];
-          lab.dataset.demoState = current.id;
-          labState.textContent = current.state;
-          labTitle.textContent = current.title;
-          labDescription.textContent = current.description;
-          labPrimary.textContent = current.button;
-          labRequest.hidden = !current.request;
-          labActivity.hidden = !current.activity;
-        };
-
-        labPrimary.addEventListener("click", () => {
-          labIndex = labIndex === labStates.length - 1 ? 0 : labIndex + 1;
-          renderLab();
-        });
-
-        labReset.addEventListener("click", () => {
-          labIndex = 0;
-          renderLab();
-          labPrimary.focus();
-        });
-
-        renderLab();
-
-        const copyButtons = Array.from(document.querySelectorAll("[data-copy-target]"));
-
-        const copyWithFallback = (value) => {
-          const field = document.createElement("textarea");
-          field.value = value;
-          field.setAttribute("readonly", "");
-          field.style.position = "fixed";
-          field.style.opacity = "0";
-          document.body.appendChild(field);
-          field.select();
-          const copied = document.execCommand("copy");
-          field.remove();
-          return copied;
-        };
-
-        copyButtons.forEach((button) => {
-          const defaultLabel = button.textContent;
-          let resetTimer;
-          button.setAttribute("aria-live", "polite");
-
-          button.addEventListener("click", async () => {
-            const target = document.getElementById(button.dataset.copyTarget);
-            if (!target) return;
-
-            const value = target.textContent.trim();
-            let copied = false;
-
-            try {
-              if (navigator.clipboard && window.isSecureContext) {
-                await navigator.clipboard.writeText(value);
-                copied = true;
-              } else {
-                copied = copyWithFallback(value);
-              }
-            } catch (error) {
-              copied = copyWithFallback(value);
-            }
-
-            window.clearTimeout(resetTimer);
-            button.textContent = copied ? "已复制" : "请手动复制";
-            resetTimer = window.setTimeout(() => {
-              button.textContent = defaultLabel;
-            }, 2200);
-          });
-        });
-
-        const revealItems = document.querySelectorAll(".reveal");
-        if ("IntersectionObserver" in window) {
-          const observer = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
-              });
-            },
-            { threshold: 0.12 }
-          );
-          revealItems.forEach((item) => observer.observe(item));
-        } else {
-          revealItems.forEach((item) => item.classList.add("is-visible"));
-        }
-
-        document.getElementById("year").textContent = String(new Date().getFullYear());
-      })();
-    </script>
+    <script src="assets/site.js" defer></script>
   </body>
 </html>
